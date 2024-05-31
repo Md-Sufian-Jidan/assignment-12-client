@@ -1,16 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
-    const { createUser } = useAuth();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // remember to use  react hook from
-        // const name = data.name;
-        // const email = data.email;
-        // const password = data.password;
-        // const image = data.image[0];
-        // console.log(name, password, email, image);
+
+    const axiosPublic = useAxiosPublic();
+    const { createUser, updateUserProfile, } = useAuth();
+    const navigate = useNavigate();
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const onSubmit = async (data) => {
+        const name = data.name;
+        const email = data.email;
+        const password = data.password;
+        const image = data.image[0];
+        console.log(name, password, email, image);
         // const img_url = await imageUpload(image);
         // console.log(img_url);
         // createUser(email, password)
@@ -38,15 +45,17 @@ const SignUp = () => {
         //                 console.log(err);
         //             })
         //     })
-    };
+    }
 
     return (
-        <section className="flex items-center gap-3 min-h-screen p-10 bg-contain  bg-[url('https://i.ibb.co/m89PbFb/blood-background.png')]">
-            <form onSubmit={handleSubmit} className="flex-1 h-full dark:bg-orange-800/50 p-6">
+        <section className="flex items-center gap-3 min-h-screen p-10 bg-contain bg-repeat-x bg-[url('https://i.ibb.co/dcLrzpC/blood-login.png')]">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex-1 h-full dark:bg-orange-800/50 p-6">
                 <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                     <div>
                         <label className="text-gray-700 dark:text-gray-200" htmlFor="username">Username</label>
-                        <input id="username" type="text" className="block w-full px-4 py-2 mt-2 text-violet-700/70 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-green-300 focus:outline-none focus:ring" />
+                        <input id="username" type="text" className="block w-full px-4 py-2 mt-2 text-violet-700/70 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-green-300 focus:outline-none focus:ring"
+                            {...register("userName", { required: true })} />
+
                     </div>
 
                     <div>
@@ -73,7 +82,7 @@ const SignUp = () => {
                 <img src="https://i.ibb.co/dcLrzpC/blood-login.png" alt="" />
             </div> */}
             <div className="lg:w-1/2">
-                <img className="w-[500px] h-[360px]"  src="https://i.ibb.co/dcLrzpC/blood-login.png" alt="" />
+                <img className="w-[500px] h-[360px]" src="https://i.ibb.co/09VVhSX/donate-blood.png" alt="" />
             </div>
         </section>
     );

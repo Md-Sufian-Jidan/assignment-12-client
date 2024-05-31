@@ -1,9 +1,10 @@
+import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const Main = () => {
     return (
         <div>
             {/* navbar  */}
-            navbar
+            <Navbar />
             {/* outlet  */}
             outlet
             {/* footer  */}

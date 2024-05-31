@@ -14,7 +14,7 @@ const Navbar = () => {
         <li><NavLink><i>Home</i></NavLink></li>
     </>
     return (
-        <div className="navbar bg-indigo-100">
+        <div className="navbar fixed max-w-7xl mx-auto bg-indigo-100">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -36,10 +36,9 @@ const Navbar = () => {
                 {
                     user ? <>
                         {/* <span>{user?.displayName}</span> */}
-                        <button onClick={handleLogOut} className="btn btn-error">LogOut</button>
-                    </> : <>
-                        <li><Link to="/login">Login</Link></li>
-                    </>
+                        <button onClick={handleLogOut} className="btn  bg-red-400/60">Logout</button>
+                    </> : 
+                    <Link className="btn bg-green-800/50" to="/login">Login</Link>
                 }
             </div>
         </div>

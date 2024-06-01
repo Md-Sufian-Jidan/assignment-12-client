@@ -6,6 +6,10 @@ import Login from "../Pages/Shared/Login/Login";
 import SignUp from "../Pages/Shared/SignUp/SignUp";
 import Dashboard from "../Layouts/Dashboard";
 import AddTest from "../Pages/Dashboard/Admin/AddTest";
+import AllTestRoute from "../Pages/Dashboard/Admin/AllTestRoute";
+import UpdateTest from "../Components/Dashboard/Form/UpdateTest";
+import Statistic from "../Pages/Dashboard/Admin/Statistic";
+import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +39,24 @@ export const router = createBrowserRouter([
             {
                 path: 'add-test',
                 element: <AddTest />
-            }
+            },
+            {
+                path: 'all-tests',
+                element: <AllTestRoute />
+            },
+            {
+                path: '/dashboard/update-test/:id',
+                element: <UpdateTest />,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-test/${params.id}`)
+            },
+            {
+                path: 'statistic',
+                element: <Statistic />
+            },
+            {
+                path: 'all-users',
+                element: <AllUsers />
+            },
         ]
     }
 ]) 

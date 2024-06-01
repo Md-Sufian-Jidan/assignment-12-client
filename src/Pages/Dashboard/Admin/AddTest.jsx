@@ -1,14 +1,43 @@
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { imageUpload } from "../../../utils/Image";
+import useAuth from "../../../Hooks/useAuth";
+import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const AddTest = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const [loading, setLoading] = useState(false);
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = async (data) => {
+        setLoading(true)
         const name = data.name;
         const testCategory = data.testCategory;
         const price = data.price;
         const image = data.photo[0];
         const description = data.testDescription;
-        console.log(name, testCategory, price, image, description);
+        // console.log(name, testCategory, price, image, description);
+        const img_url = await imageUpload(image);
+        console.log(img_url);
+        const admin = {
+            email: user?.email,
+            photo: user?.photoURL,
+            name: user?.displayName
+        }
+        const testData = { name, testCategory, price, img_url, description, admin }
+        console.log(testData);
+        await axiosSecure.post('/add-test', testData)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    toast.success(`${name} is added to the database`);
+                    reset();
+                    setLoading(false);
+                }
+            })
     };
 
     return (
@@ -29,7 +58,6 @@ const AddTest = () => {
                         <option disabled value="default">Select A Test Category</option>
                         <option value="Hematology">Hematology</option>
                         <option value="Biochemistry">Biochemistry</option>
-                        <option value="Endocrinology">Endocrinology</option>
                         <option value="Endocrinology">Endocrinology</option>
                         <option value="Cardiology">Cardiology</option>
                         <option value="Urinalysis">Urinalysis</option>
@@ -57,7 +85,7 @@ const AddTest = () => {
                         accept='image/*'
                         {...register("photo", { required: true })}
                     />
-                    {errors.photo&& <span className="text-red-600">Photo is required</span>}
+                    {errors.photo && <span className="text-red-600">Photo is required</span>}
                 </div>
                 {/* test description */}
                 <div>
@@ -68,7 +96,10 @@ const AddTest = () => {
                 </div>
 
                 <div className="flex justify-center mt-6">
-                    <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-lime-700/60 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600">Add Test</button>
+                    {loading ? <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-lime-700/60 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600 flex justify-center items-center">
+                        <AiOutlineLoading3Quarters className=" animate-spin" size={20} />
+                    </button> :
+                        <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-lime-700/60 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600">Add Test</button>}
                 </div>
             </form>
         </div>

@@ -38,7 +38,7 @@ const Login = () => {
         if (password !== confirmPassword) return toast.error('Password and confirm password will be same');
         loginUser(email, password)
             .then(res => {
-                console.log(res.data);
+                console.log(res);
                 navigate('/');
                 return toast.success('User Login Successfully');
             })

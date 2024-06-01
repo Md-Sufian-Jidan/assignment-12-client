@@ -10,6 +10,9 @@ import AllTestRoute from "../Pages/Dashboard/Admin/AllTestRoute";
 import UpdateTest from "../Components/Dashboard/Form/UpdateTest";
 import Statistic from "../Pages/Dashboard/Admin/Statistic";
 import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
+import Profile from "../Components/Dashboard/Profile/Profile";
+import AllTests from "../Pages/Home/AllTests/AllTests";
+import SingleTest from "../Pages/Home/AllTests/SingleTest";
 
 
 export const router = createBrowserRouter([
@@ -21,6 +24,15 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home />
+            },
+            {
+                path:'/all-tests',
+                element: <AllTests />
+            },
+            {
+                path:'/test/details/:id',
+                element: <SingleTest />,
+                loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
             }
         ]
     },
@@ -56,6 +68,11 @@ export const router = createBrowserRouter([
             {
                 path: 'all-users',
                 element: <AllUsers />
+            },
+            // every body access
+            {
+                path: '/dashboard/profile',
+                element: <Profile />
             },
         ]
     }

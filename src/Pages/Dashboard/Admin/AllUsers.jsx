@@ -27,7 +27,7 @@ const AllUsers = () => {
                         <th>#</th>
                         <th>User Image</th>
                         <th>User Name</th>
-                        <th>Update</th>
+                        <th>Status</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -46,11 +46,9 @@ const AllUsers = () => {
                                 </div>
                             </td>
                             <td>{test?.name}</td>
-                            <th>
-                                <Link to={`/dashboard/update-test/${test?._id}`}>
-                                    <button className="text-green-500 text-lg"><FaEdit /></button>
-                                </Link>
-                            </th>
+                            <td>
+                                {test?.status}
+                            </td>
                             <th>
                                 <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
                             </th>

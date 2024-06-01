@@ -1,23 +1,27 @@
 import { useState } from 'react'
-import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { BsFillHouseAddFill } from 'react-icons/bs'
-// import { GrUserAdmin } from 'react-icons/gr'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsGraphUp } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { MdHomeWork } from 'react-icons/md'
 import useAuth from '../../../Hooks/useAuth'
-import useAdmin from '../../../Hooks/useAdmin'
+// import useAdmin from '../../../Hooks/useAdmin'
 import AdminRoute from '../Admin/AdminRoute'
 import UserRoute from '../User/UserRoute'
+import toast from 'react-hot-toast'
+import { MdLogout } from 'react-icons/md'
+import { CgProfile } from 'react-icons/cg'
 
 const Sidebar = () => {
-    const { logOut } = useAuth()
+    const { logout } = useAuth()
+    const handleLogOut = () => {
+        logout()
+            .then(() => { return toast.success('User logout successfully') })
+            .catch(err => { return toast.error(err.message) });
+    }
     const [isActive, setActive] = useState(false)
-    const [isAdmin] = useAdmin();
-    console.log(isAdmin);
+    // const [isAdmin] = useAdmin();
+    // console.log(isAdmin);
+
+    const isAdmin = true;
 
     // Sidebar Responsive Handler
     const handleToggle = () => {
@@ -37,7 +41,7 @@ const Sidebar = () => {
                                 width='50'
                                 height='50'
                             />
-                             <span className='text-xl text-green-500'>HealthScope</span>
+                            <span className='text-xl text-green-500'>HealthScope</span>
                         </Link>
                     </div>
                 </div>
@@ -75,7 +79,7 @@ const Sidebar = () => {
                     <div className='flex flex-col justify-between flex-1 mt-6'>
                         {/*  Menu Items */}
                         {isAdmin ? <AdminRoute /> : <UserRoute />}
-                       
+
                     </div>
                 </div>
 
@@ -90,15 +94,15 @@ const Sidebar = () => {
                             }`
                         }
                     >
-                        <FcSettings className='w-5 h-5' />
+                        <CgProfile className='w-5 h-5' />
 
                         <span className='mx-4 font-medium'>Profile</span>
                     </NavLink>
                     <button
-                        onClick={logOut}
+                        onClick={handleLogOut}
                         className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'
                     >
-                        <GrLogout className='w-5 h-5' />
+                        <MdLogout className='w-5 h-5' />
 
                         <span className='mx-4 font-medium'>Logout</span>
                     </button>

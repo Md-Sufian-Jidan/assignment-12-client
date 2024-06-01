@@ -98,6 +98,7 @@ const SignUp = () => {
                                 {...register("email", { required: true })} />
                             {errors.email && <span className="text-red-500">Email field is required</span>}
                         </div>
+                        {/* password */}
                         <div className="relative">
                             <label className="text-gray-700 dark:text-gray-200" htmlFor="password">Password</label>
                             <input id="password" type={show ? "text" : "password"} className="block w-full px-4 py-2 mt-2 text-violet-700/70 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-700/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-green-300 focus:outline-none focus:ring"
@@ -110,6 +111,7 @@ const SignUp = () => {
                                 }
                             </span>
                         </div>
+                        {/* confirm password */}
                         <div className="relative">
                             <label className="text-gray-700 dark:text-gray-200" htmlFor="passwordConfirmation">Password Confirmation</label>
                             <input id="passwordConfirmation" type={showPassword ? "text" : "password"} className="block w-full px-4 py-2 mt-2 text-violet-700/70 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-green-300 focus:outline-none focus:ring"
@@ -122,7 +124,7 @@ const SignUp = () => {
                                 }
                             </span>
                         </div>
-
+                        {/* select image */}
                         <div>
                             <label htmlFor='image' className='block text-gray-700 dark:text-gray-200'>
                                 Select Image:
@@ -153,7 +155,6 @@ const SignUp = () => {
                                 <option value="O-">O-</option>
                             </select>
                         </div>
-                        {/* <input type="submit" /> */}
                         {/* district  */}
                         <div>
                             <span className="label-text text-gray-700 dark:text-gray-200">Select Your District</span>

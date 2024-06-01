@@ -3,12 +3,15 @@ import Sidebar from "../Components/Dashboard/Sidebar/Sidebar";
 
 const Dashboard = () => {
     return (
-        <div>
+        <div className="relative min-h-screen md:flex">
             <Sidebar />
             {/* dynamic content */}
-            <div>
-                <Outlet />
+            <div className="flex-1 md:ml-64">
+                <div className="p-5">
+                    <Outlet />
+                </div>
             </div>
+
 
         </div>
     );

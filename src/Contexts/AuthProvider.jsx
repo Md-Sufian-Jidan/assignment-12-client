@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
-// import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 // firebase auth
 import { getAuth } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
@@ -10,7 +10,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true);
-    // const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosPublic();
     //firebase auth
     const auth = getAuth(app);
 
@@ -49,31 +49,31 @@ const AuthProvider = ({ children }) => {
         return signOut(auth);
     };
 
-    // useEffect(() => {
-    //     const unsubscribe = onAuthStateChanged(auth, currentUser => {
-    //         setUser(currentUser);
-    //         // get the token and set in the local storage
-    //         if (currentUser) {
-    //             const userEmail = { email: currentUser?.email };
-    //             axiosPublic.post('/jwt', userEmail)
-    //                 .then(res => {
-    //                     if (res.data.token) {
-    //                         localStorage.setItem('access-token', res.data.token);
-    //                         setLoading(false);
-    //                     }
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            // get the token and set in the local storage
+            if (currentUser) {
+                const userEmail = { email: currentUser?.email };
+                axiosPublic.post('/jwt', userEmail)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token);
+                            setLoading(false);
+                        }
 
-    //                 })
-    //         }
-    //         else {
-    //             console.log('current user ', currentUser);
-    //             localStorage.removeItem('access-token');
-    //             setLoading(false);
-    //         }
-    //     });
-    //     return () => {
-    //         return unsubscribe();
-    //     }
-    // }, [axiosPublic]);
+                    })
+            }
+            else {
+                console.log('current user ', currentUser);
+                localStorage.removeItem('access-token');
+                setLoading(false);
+            }
+        });
+        return () => {
+            return unsubscribe();
+        }
+    }, [axiosPublic]);
 
     const authInfo = { user, loading, createUser, updateUserProfile, loginUser, googleLoginUser, githubLoginUser, logout };
     return (
@@ -82,7 +82,8 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
 AuthProvider.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.array,
 };
 export default AuthProvider;

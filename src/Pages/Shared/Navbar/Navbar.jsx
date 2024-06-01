@@ -1,20 +1,27 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
-    const { user, logOut } = useAuth
+    const { user, logout } = useAuth();
 
     const handleLogOut = () => {
-        logOut()
-            .then(() => {})
-            .catch(error => { console.log(error); });
+        logout()
+            .then(() => {
+                toast.success('User logout successfully');
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error.message);
+            });
     };
     const navLinks = <>
-        <li><NavLink><i>Home</i></NavLink></li>
-        <li><NavLink><i>Home</i></NavLink></li>
+        <li><NavLink to="/"><i>Home</i></NavLink></li>
+        <li><NavLink to="all-reports"><i>All Reports</i></NavLink></li>
+        <li><NavLink to="/dashboard" ><i>Dashboard</i></NavLink></li>
     </>
     return (
-        <div className="navbar fixed max-w-7xl mx-auto bg-indigo-100">
+        <div className="navbar fixed max-w-7xl mx-auto bg-indigo-100 z-50">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -37,8 +44,8 @@ const Navbar = () => {
                     user ? <>
                         {/* <span>{user?.displayName}</span> */}
                         <button onClick={handleLogOut} className="btn  bg-red-400/60">Logout</button>
-                    </> : 
-                    <Link className="btn bg-green-800/50" to="/login">Login</Link>
+                    </> :
+                        <Link className="btn bg-green-800/50" to="/login">Login</Link>
                 }
             </div>
         </div>

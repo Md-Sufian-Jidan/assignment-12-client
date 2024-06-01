@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 // firebase auth
-import { getAuth } from "firebase/auth";
-import app from "../Firebase/Firebase.config";
+import auth from "../Firebase/Firebase.config";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true);
     const axiosPublic = useAxiosPublic();
-    //firebase auth
-    const auth = getAuth(app);
-
     // create user by email and password
     const createUser = (email, password) => {
         setLoading(true);
@@ -27,7 +23,7 @@ const AuthProvider = ({ children }) => {
         });
     };
     // login user by email and password
-    const loginUser = (auth, email, password) => {
+    const loginUser = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };

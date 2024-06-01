@@ -1,18 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-simple-captcha";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet";
+import useAuth from "../../../Hooks/useAuth";
 // import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
     // googleLoginUser, githubLoginUser 
     const { loginUser } = useAuth();
     // custom state
-    const [disabled, setDisabled] = useState(true);
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -23,20 +21,6 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-    useEffect(() => {
-        loadCaptchaEnginge(6);
-    }, []);
-
-    // validate recaptcha
-    const handleValidateCaptcha = (e) => {
-        const user_captcha_value = e.target.value;
-        if (validateCaptcha(user_captcha_value)) {
-            setDisabled(false);
-        }
-        else {
-            setDisabled(true)
-        }
-    };
 
     const onSubmit = (data) => {
         const email = data.email;
@@ -52,7 +36,6 @@ const Login = () => {
             return toast.error('Your password should contain a lower letter')
         }
         if (password !== confirmPassword) return toast.error('Password and confirm password will be same');
-
         loginUser(email, password)
             .then(res => {
                 console.log(res.data);
@@ -65,35 +48,6 @@ const Login = () => {
                 return toast.error(err.message);
             });
     };
-    // // google login
-    // const handleGoogle = () => {
-    //     googleLoginUser()
-    //         .then(res => {
-    //             console.log(res.data);
-    //             navigate('/');
-    //             return toast.success('User Login Successfully');
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             navigate('/');
-    //             return toast.error(err.message);
-    //         })
-    // }
-    // // github login
-    // const handleGithub = () => {
-    //     githubLoginUser()
-    //         .then(res => {
-    //             console.log(res.data);
-    //             navigate('/');
-    //             return toast.success('User Login Successfully');
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             navigate('/');
-    //             return toast.error(err.message);
-    //         })
-    // };
-
     return (
         <>
             <Helmet>
@@ -129,23 +83,11 @@ const Login = () => {
                                 }
                             </span>
                         </div>
-                        <div className="">
-                            <label className="label">
-                                <LoadCanvasTemplate />
-                            </label>
-                            <span>Type The above captcha</span>
-                            <input onBlur={handleValidateCaptcha} type="text" name="captcha" className="block w-full px-4 py-2 mt-2 text-white bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-green-300 focus:outline-none focus:ring" />
-                        </div>
                         <div className=" mt-6">
-                            <input disabled={disabled} className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md focus:outline-none focus:bg-sky-600" type="submit" value="Sign In" />
+                            <input className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md focus:outline-none focus:bg-sky-600" type="submit" value="Sign In" />
                         </div>
-                        {/* social login  */}
                     </form>
-                    {/* <div className="divider ">or login with social account</div>
-                <div className="flex flex-col gap-3 mt-3">
-                    <button onClick={handleGoogle} className="btn btn-success text-xl"> <FaGoogle /> Google</button>
-                    <button onClick={handleGithub} className="btn btn-neutral text-xl"><FaGithub /> Github</button>
-                </div> */}
+
                     <p className="text-center mt-2 text-white">New to the website, <Link className="underline hover:scale-110" to="/sign-up">Create an account</Link></p>
                 </div>
             </section>

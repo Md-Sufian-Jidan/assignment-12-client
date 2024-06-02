@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import BookingModal from "../../../Components/Dashboard/Modal/BookingBodal";
+import BookingModal from "../../../Components/Dashboard/Modal/BookingModal";
 import { useState } from "react";
 
 const SingleTest = () => {

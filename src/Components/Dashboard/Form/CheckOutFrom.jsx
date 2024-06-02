@@ -2,16 +2,16 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import './CheckOutFrom.css'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAuth from "../../hooks/useAuth";
-import { ImSpinner9 } from "react-icons/im";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
+import { FaSpinner } from "react-icons/fa";
 
 const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // custom state
     const [clientSecret, setClientSecret] = useState('');
     // const [error, setError] = useState('');
@@ -93,9 +93,15 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
         if (paymentIntent.status === 'succeeded') {
             console.log(paymentIntent);
             // 1. create payment info object
+            const guest = {
+                email: user?.email,
+                name: user?.displayName,
+                photo: user?.photoURL
+            }
             const paymentInfo = {
                 ...bookingInfo,
-                roomId: bookingInfo._id,
+                guest,
+                bookId: bookingInfo._id,
                 transactionId: paymentIntent?.id,
                 date: new Date(),
             };
@@ -103,16 +109,18 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
             delete paymentInfo?._id
             try {
                 // 2. save payment info in booking in db
-                const { data } = await axiosSecure.post('/booking', paymentInfo)
+                const { data } = await axiosSecure.post('/booking', paymentInfo);
+                console.log(data);
 
                 // 3. change room status to booked in db
-                await axiosSecure.patch(`/room/status/${bookingInfo?._id}`, { status: true })
+                await axiosSecure.patch(`/book/slot/${bookingInfo?._id}`)
+                console.log('booking updated');
 
                 //update ui
                 refetch();
                 closeModal();
-                toast.success(`Room Booked Successfully`);
-                navigate('/dashboard/my-bookings');
+                toast.success(`Test Booked Successfully`);
+                // navigate('/dashboard/reservation');
 
                 console.log(data);
             } catch (err) {
@@ -151,7 +159,7 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
                     >
                         {
                             processing ?
-                                <ImSpinner9 className="animate-spin m-auto" size={24} /> :
+                                <FaSpinner className="animate-spin m-auto" size={24} /> :
                                 (`Pay $${bookingInfo?.price}`)
                         }
                     </button>
@@ -161,7 +169,7 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
                             closeModal();
                         }}
                         type='button'
-                        className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
+                        className='inline-flex justify-center rounded-md border border-transparent bg-red-400/40 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
                     >
                         Cancel
                     </button>

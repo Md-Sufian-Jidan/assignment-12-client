@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle, } from '@headlessui/react'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 import { Fragment } from 'react'
 
 // payment gateway implement
@@ -47,25 +47,25 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                                 </DialogTitle>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        Room: {bookingInfo.title}
+                                        Test Name : {bookingInfo.name}
                                     </p>
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        Location: {bookingInfo.location}
+                                        Test Category : {bookingInfo.testCategory}
                                     </p>
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        Guest: {bookingInfo.guest.name}
+                                        Guest: {bookingInfo.name}
                                     </p>
                                 </div>
-                                <div className='mt-2'>
+                                {/* <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
                                         From: {format(new Date(bookingInfo.from), 'PP')} - To:{' '}
                                         {format(new Date(bookingInfo.to), 'PP')}
                                     </p>
-                                </div>
+                                </div> */}
 
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>

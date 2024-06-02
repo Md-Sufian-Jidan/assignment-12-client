@@ -26,8 +26,9 @@ const AddTest = () => {
             email: user?.email,
             photo: user?.photoURL,
             name: user?.displayName
-        }
-        const testData = { name, testCategory, price, img_url, description, admin }
+        };
+        const slot = 5;
+        const testData = { name, testCategory, price, img_url, description, admin, slot }
         console.log(testData);
         await axiosSecure.post('/add-test', testData)
             .then(res => {

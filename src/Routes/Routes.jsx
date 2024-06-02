@@ -18,6 +18,7 @@ import UserStatistics from "../Pages/Dashboard/User/UserStatistics";
 import MyAppointments from "../Pages/Dashboard/User/MyAppointments";
 import MyTestResult from "../Pages/Dashboard/User/MyTestResult";
 import AddBanner from "../Pages/Dashboard/Admin/AddBanner";
+import AllBanner from "../Pages/Dashboard/Admin/AllBanner";
 
 
 export const router = createBrowserRouter([
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
             {
                 path: 'add-banner',
                 element: <PrivateRoute><AddBanner /></PrivateRoute>
+            },
+            {
+                path: 'all-banner',
+                element: <PrivateRoute><AllBanner /></PrivateRoute>
             },
             // normal user route
             {

@@ -19,6 +19,7 @@ import MyAppointments from "../Pages/Dashboard/User/MyAppointments";
 import MyTestResult from "../Pages/Dashboard/User/MyTestResult";
 import AddBanner from "../Pages/Dashboard/Admin/AddBanner";
 import AllBanner from "../Pages/Dashboard/Admin/AllBanner";
+import Reservations from "../Pages/Dashboard/Admin/Reservations";
 
 
 export const router = createBrowserRouter([
@@ -38,7 +39,6 @@ export const router = createBrowserRouter([
             {
                 path: '/test/details/:id',
                 element: <SingleTest />,
-                // loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
             }
         ]
     },
@@ -82,6 +82,10 @@ export const router = createBrowserRouter([
             {
                 path: 'all-banner',
                 element: <PrivateRoute><AllBanner /></PrivateRoute>
+            },
+            {
+                path: 'reservations',
+                element: <PrivateRoute><Reservations /></PrivateRoute>
             },
             // normal user route
             {

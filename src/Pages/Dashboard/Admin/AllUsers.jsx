@@ -6,6 +6,7 @@ import { FaTrashCanArrowUp } from "react-icons/fa6";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import Skeleton from "../../../../Skeleton";
+import { Helmet } from "react-helmet";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -51,48 +52,53 @@ const AllUsers = () => {
     };
     if (isLoading) return <Skeleton />
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>User Image</th>
-                        <th>User Name</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* row 1 */}
-                    {
-                        users?.map((test, idx) => <tr key={test?._id}>
-                            <th>{idx + 1}</th>
-                            <td>
-                                <div className="flex items-center gap-3">
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-12 h-12">
-                                            <img src={test?.image} />
+        <>
+            <Helmet>
+                <title>Dashboard | All Users</title>
+            </Helmet>
+            <div className="overflow-x-auto">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User Image</th>
+                            <th>User Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* row 1 */}
+                        {
+                            users?.map((test, idx) => <tr key={test?._id}>
+                                <th>{idx + 1}</th>
+                                <td>
+                                    <div className="flex items-center gap-3">
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle w-12 h-12">
+                                                <img src={test?.image} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>{test?.name}</td>
-                            <td>{
-                                test?.role === 'admin' ?
-                                    <span className="font-bold">{test?.role}</span> :
-                                    <span>{test?.role}</span>}</td>
-                            <td>{test?.status}</td>
-                            <th>
-                                <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
-                            </th>
-                        </tr>)
-                    }
+                                </td>
+                                <td>{test?.name}</td>
+                                <td>{
+                                    test?.role === 'admin' ?
+                                        <span className="font-bold">{test?.role}</span> :
+                                        <span>{test?.role}</span>}</td>
+                                <td>{test?.status}</td>
+                                <th>
+                                    <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
+                                </th>
+                            </tr>)
+                        }
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

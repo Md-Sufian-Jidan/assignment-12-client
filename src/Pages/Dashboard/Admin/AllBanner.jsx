@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const AllBanner = () => {
     const axiosSecure = useAxiosSecure();
@@ -22,6 +23,10 @@ const AllBanner = () => {
         }
     }
     return (
+        <>
+        <Helmet>
+            <title>Dashboard | All Banners</title>
+        </Helmet>
         <div>
             <h2 className="text-3xl font-bold">Total Banner : {banners?.length}</h2>
             {
@@ -42,6 +47,7 @@ const AllBanner = () => {
                 </div>)
             }
         </div>
+        </>
     );
 };
 

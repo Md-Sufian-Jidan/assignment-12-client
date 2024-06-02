@@ -5,6 +5,7 @@ import { imageUpload } from "../../../utils/Image";
 import useAuth from "../../../Hooks/useAuth";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Helmet } from "react-helmet";
 
 const AddTest = () => {
     const { user } = useAuth();
@@ -42,6 +43,10 @@ const AddTest = () => {
     };
 
     return (
+        <>
+        <Helmet>
+            <title>Dashboard | Add Test</title>
+        </Helmet>
         <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl text-center font-bold my-3">Add test</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="bg-orange-400/40 px-16 py-5 rounded-xl space-y-2">
@@ -104,6 +109,7 @@ const AddTest = () => {
                 </div>
             </form>
         </div>
+        </>
     );
 };
 

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle, } from '@headlessui/react'
-// import { format } from 'date-fns'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 // payment gateway implement
 import { loadStripe } from '@stripe/stripe-js';
@@ -10,7 +9,34 @@ import CheckOutForm from '../Form/CheckOutFrom';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_GATEWAY);
 
-const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
+const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch, disable, setDisable }) => {
+    const [discount, setDiscount] = useState('');
+    const [afterDiscount, setAfterDiscount] = useState(0);
+
+    const handleDiscount = () => {
+        console.log(typeof discount);
+        if (discount === 'SUMMER20') {
+            const discountPrice = bookingInfo?.price * .20;
+            const totalPrice = bookingInfo?.price - discountPrice;
+            console.log(totalPrice);
+            setAfterDiscount(totalPrice);
+            setDisable(true);
+        }
+        if (discount === 'WINTER15') {
+            const discountPrice = bookingInfo?.price * .15;
+            const totalPrice = bookingInfo?.price - discountPrice;
+            console.log(totalPrice);
+            setAfterDiscount(totalPrice);
+            setDisable(true);
+        }
+        if (discount === 'NEWYEAR10') {
+            const discountPrice = bookingInfo?.price * .10;
+            const totalPrice = bookingInfo?.price - discountPrice;
+            console.log(totalPrice);
+            setAfterDiscount(totalPrice);
+            setDisable(true);
+        }
+    }
     // console.log(bookingInfo);
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -55,15 +81,9 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                                         Test Category : {bookingInfo.testCategory}
                                     </p>
                                 </div>
-                                <div className='mt-2'>
-                                    <p className='text-sm text-gray-500'>
-                                        Guest: {bookingInfo.name}
-                                    </p>
-                                </div>
                                 {/* <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        From: {format(new Date(bookingInfo.from), 'PP')} - To:{' '}
-                                        {format(new Date(bookingInfo.to), 'PP')}
+                                        : {bookingInfo.price}
                                     </p>
                                 </div> */}
 
@@ -72,10 +92,27 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                                         Price: $ {bookingInfo.price}
                                     </p>
                                 </div>
+                                <div className='mt-2'>
+                                    <label className="text-xl font-medium" htmlFor="username">Discount</label>
+                                    {/* <input id="username" type="text" className="block w-full px-4 py-2 mt-2 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-slate-400 focus:outline-none focus:ring" />
+                                        <button className='btn'>Discount</button> */}
+                                    <label className="input input-bordered flex items-center gap-2">
+                                        <input name='discount' type="text" className="grow" placeholder="Search" onBlur={(e) => setDiscount(e.target.value)} />
+                                        <button disabled={disable} onClick={() => handleDiscount()} className="btn bg-gradient-to-br from-pink-400 to-gray-400 text-white">Get Discount</button>
+                                    </label>
+                                    {/* {...register("name", { required: true })} */}
+                                    {/* {errors.name && <span className="text-red-500">Test Name is required</span>} */}
+                                </div>
+
+                                <div className='mt-2'>
+                                    <p className='text-sm text-gray-500'>
+                                        After Discount: $ {afterDiscount}
+                                    </p>
+                                </div>
                                 <hr className='mt-8 ' />
                                 {/* checkout form */}
                                 <Elements stripe={stripePromise}>
-                                    <CheckOutForm closeModal={closeModal} bookingInfo={bookingInfo} refetch={refetch} />
+                                    <CheckOutForm closeModal={closeModal} bookingInfo={bookingInfo} refetch={refetch}  afterDiscount={afterDiscount} setAfterDiscount={setAfterDiscount} />
                                 </Elements>
                                 {/* checkout form end */}
 
@@ -93,6 +130,8 @@ BookingModal.propTypes = {
     closeModal: PropTypes.func,
     isOpen: PropTypes.bool,
     refetch: PropTypes.func,
+    disable: PropTypes.bool,
+    setDisable: PropTypes.func,
 }
 
 export default BookingModal

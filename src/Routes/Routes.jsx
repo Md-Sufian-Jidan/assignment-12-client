@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
             {
                 path: '/test/details/:id',
                 element: <SingleTest />,
-                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
+                // loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
             }
         ]
     },

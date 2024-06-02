@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 import { FaSpinner } from "react-icons/fa";
 
-const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
+const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfterDiscount }) => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     // const navigate = useNavigate();
@@ -106,7 +106,8 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
                 date: new Date(),
             };
             // remember this it will help you in the future
-            delete paymentInfo?._id
+            delete paymentInfo?._id;
+
             try {
                 // 2. save payment info in booking in db
                 const { data } = await axiosSecure.post('/booking', paymentInfo);
@@ -120,6 +121,7 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
                 refetch();
                 closeModal();
                 toast.success(`Test Booked Successfully`);
+                setAfterDiscount(0)
                 // navigate('/dashboard/reservation');
 
                 console.log(data);
@@ -160,7 +162,9 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch }) => {
                         {
                             processing ?
                                 <FaSpinner className="animate-spin m-auto" size={24} /> :
-                                (`Pay $${bookingInfo?.price}`)
+                                afterDiscount > 0 ?
+                                    (`Pay $${afterDiscount}`) :
+                                    (`Pay $${bookingInfo?.price}`)
                         }
                     </button>
                     <button
@@ -184,5 +188,7 @@ CheckOutForm.propTypes = {
     closeModal: PropTypes.bool,
     bookingInfo: PropTypes.object,
     refetch: PropTypes.func,
+    afterDiscount: PropTypes.number,
+    setAfterDiscount: PropTypes.func,
 }
 export default CheckOutForm;

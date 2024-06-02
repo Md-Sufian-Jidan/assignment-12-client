@@ -15,7 +15,7 @@ const AllBanner = () => {
             <h2 className="text-3xl font-bold">Total Banner : {banners?.length}</h2>
             {
                 banners?.map(banner => <div key={banner?._id} className="my-5">
-                    <div className="hero h-[500px] my-5" style={{ backgroundImage: `url(${banner?.img_url})` }}>
+                    <div className="hero h-[500px] my-5" style={{ backgroundImage: `url(${banner?.img_url})`}}>
                         <div className="hero-overlay bg-opacity-60"></div>
                         <div className="hero-content text-center text-neutral-content">
                             <div className="max-w-2xl">

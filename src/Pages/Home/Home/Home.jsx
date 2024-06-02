@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Banner from "../../../Components/Banner/Banner";
 import Cover from "./Cover";
+import Faq from "./Faq";
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
                     <p>Explore our tailored health packages designed to meet your specific needs. Take advantage of our seasonal discounts and start your journey towards better health today. Whether it is a comprehensive health check-up or a specialized diagnostic test, our expert team is here to provide you with the best care. Do not miss out on our limited-time offers and special coupon codes for additional savings!</p>
                 </div>
                 <Cover />
+                <Faq />
             </div>
         </>
     );

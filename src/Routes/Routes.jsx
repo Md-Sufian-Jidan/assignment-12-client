@@ -14,6 +14,10 @@ import Profile from "../Components/Dashboard/Profile/Profile";
 import AllTests from "../Pages/Home/AllTests/AllTests";
 import SingleTest from "../Pages/Home/AllTests/SingleTest";
 import PrivateRoute from "./PrivateRoute";
+import UserStatistics from "../Pages/Dashboard/User/UserStatistics";
+import MyAppointments from "../Pages/Dashboard/User/MyAppointments";
+import MyTestResult from "../Pages/Dashboard/User/MyTestResult";
+import AddBanner from "../Pages/Dashboard/Admin/AddBanner";
 
 
 export const router = createBrowserRouter([
@@ -27,13 +31,13 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path:'/all-tests',
+                path: '/all-tests',
                 element: <AllTests />
             },
             {
-                path:'/test/details/:id',
+                path: '/test/details/:id',
                 element: <SingleTest />,
-                loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/details/${params.id}`)
             }
         ]
     },
@@ -63,18 +67,36 @@ export const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-test/${params.id}`)
             },
             {
-                path: 'statistic',
+                path: '/dashboard/statistic',
                 element: <PrivateRoute><Statistic /></PrivateRoute>
             },
             {
                 path: 'all-users',
                 element: <PrivateRoute><AllUsers /></PrivateRoute>
             },
+            {
+                path: 'add-banner',
+                element: <PrivateRoute><AddBanner /></PrivateRoute>
+            },
+            // normal user route
+            {
+                path: 'user-statistics',
+                element: <UserStatistics />
+            },
+            {
+                path: '/dashboard/my-appointments',
+                element: <MyAppointments />
+            },
+            {
+                path: '/dashboard/my-test-result',
+                element: <MyTestResult />
+            },
             // every body access
             {
                 path: '/dashboard/profile',
                 element: <PrivateRoute><Profile /></PrivateRoute>
             },
+
         ]
     }
 ]) 

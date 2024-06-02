@@ -59,6 +59,7 @@ const AllUsers = () => {
                         <th>#</th>
                         <th>User Image</th>
                         <th>User Name</th>
+                        <th>Role</th>
                         <th>Status</th>
                         <th>Delete</th>
                     </tr>
@@ -78,9 +79,11 @@ const AllUsers = () => {
                                 </div>
                             </td>
                             <td>{test?.name}</td>
-                            <td>
-                                {test?.status}
-                            </td>
+                            <td>{
+                                test?.role === 'admin' ?
+                                    <span className="font-bold">{test?.role}</span> :
+                                    <span>{test?.role}</span>}</td>
+                            <td>{test?.status}</td>
                             <th>
                                 <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
                             </th>

@@ -1,16 +1,12 @@
-// import useRole from '../../../hooks/useRole';
-// import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 import useAuth from '../../../Hooks/useAuth';
+import useAdmin from '../../../Hooks/useAdmin';
 
 const Profile = () => {
     const { user } = useAuth();
-    // const [role, isLoading] = useRole();
+    const [isAdmin, isLoading] = useAdmin();
     // console.log(role);
-    // <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full '>
-    //     {/* {role?.role.split('')[0].toUpperCase() + role?.role.substring(1,4)} */}
-    //     {role?.role.split('')[0].toUpperCase() + role?.role.substring(1, 5)}
-    // </p>
+
 
     console.log(user)
     // if (isLoading) return <LoadingSpinner />
@@ -36,6 +32,10 @@ const Profile = () => {
                         </div>
                         <p className='mt-2 text-xl font-medium text-gray-800 '>
                             User Id: {user?.uid}
+                        </p>
+                        <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full '>
+                            {/* {role?.role.split('')[0].toUpperCase() + role?.role.substring(1,4)} */}
+                            {role?.role.split('')[0].toUpperCase() + role?.role.substring(1, 5)}
                         </p>
                         <div className='w-full p-2 mt-4 rounded-lg'>
                             <div className='flex flex-wrap items-center justify-between text-sm text-gray-600 '>

@@ -9,6 +9,7 @@ import UserRoute from '../User/UserRoute'
 import toast from 'react-hot-toast'
 import { MdLogout } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
+import useAdmin from '../../../Hooks/useAdmin'
 
 const Sidebar = () => {
     const { logout } = useAuth()
@@ -18,10 +19,9 @@ const Sidebar = () => {
             .catch(err => { return toast.error(err.message) });
     }
     const [isActive, setActive] = useState(false)
-    // const [isAdmin] = useAdmin();
-    // console.log(isAdmin);
+    const [isAdmin] = useAdmin();
+    console.log(isAdmin);
 
-    const isAdmin = true;
 
     // Sidebar Responsive Handler
     const handleToggle = () => {

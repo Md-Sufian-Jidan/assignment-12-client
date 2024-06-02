@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}`
-})
+    baseURL: `${import.meta.env.VITE_API_URL}`,
+});
+
 const useAxiosSecure = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const useAxiosSecure = () => {
         return config;
     }, function (error) {
         // Do something with request error
+        console.log('error');
         return Promise.reject(error);
     });
 
@@ -34,7 +36,7 @@ const useAxiosSecure = () => {
     //     }
     //     return Promise.reject(error);
     // })
-    
+
     return axiosSecure;
 };
 

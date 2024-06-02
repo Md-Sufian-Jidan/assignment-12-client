@@ -1,23 +1,55 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
+// import { Link } from "react-router-dom";
+// import { FaEdit } from "react-icons/fa";
 import { FaTrashCanArrowUp } from "react-icons/fa6";
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/src/sweetalert2.scss';
+import Skeleton from "../../../../Skeleton";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
-
-    const { data: users, refetch } = useQuery({
+    const { data: users, refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const { data } = await axiosSecure.get('/all-users')
             return data;
         }
     });
+
+    // handle delete
     const handleDelete = (id) => {
         console.log(id);
-        refetch();
-    }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/test-delete/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "User has been deleted.",
+                                icon: "success"
+                            });
+                            refetch();
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        });
+    };
+    if (isLoading) return <Skeleton />
     return (
         <div className="overflow-x-auto">
             <table className="table">

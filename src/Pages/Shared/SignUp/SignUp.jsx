@@ -8,18 +8,21 @@ import { districs } from "../../../../public/district";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet";
+import { VscLoading } from "react-icons/vsc";
 
 const SignUp = () => {
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     // custom hooks
     const axiosPublic = useAxiosPublic();
-    const { createUser, updateUserProfile, } = useAuth();
+    const { createUser, updateUserProfile } = useAuth();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
+        setLoading(true);
         const name = data.name;
         const email = data.email;
         const password = data.password;
@@ -66,12 +69,14 @@ const SignUp = () => {
                 updateUserProfile(name, img_url)
                     .then((res) => {
                         console.log(res);
+                        setLoading(false);
                         navigate('/'); // fix this before deploying your project
                         toast.success('User Created Successfully');
                     })
 
                     .catch(err => {
-                        toast.error(`${err.message}`)
+                        setLoading(false);
+                        toast.error(`${err.message}`);
                         console.log(err);
                     })
             })
@@ -181,7 +186,9 @@ const SignUp = () => {
                     </div>
 
                     <div className="flex justify-center mt-6">
-                        <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600">Sign Up</button>
+                        {loading ? <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-lime-700/60 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600 flex justify-center items-center">
+                            <VscLoading className=" animate-spin" size={20} />
+                        </button> : <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600">Sign Up</button>}
                     </div>
                     <p className="text-center mt-2 text-white">All Ready Have an Account? <Link className="underline hover:scale-110" to="/login">Then Login</Link></p>
                 </form>

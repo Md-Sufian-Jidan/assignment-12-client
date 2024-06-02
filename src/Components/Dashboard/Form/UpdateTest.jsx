@@ -5,13 +5,14 @@ import { useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { VscLoading } from "react-icons/vsc";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const UpdateTest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [loading, setLoading] = useState(false);
     const test = useLoaderData();
+    const navigate = useNavigate();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = async (data) => {
@@ -36,6 +37,7 @@ const UpdateTest = () => {
                 console.log(res.data);
                 if (res.data.modifiedCount > 0) {
                     toast.success(`${name} is updated to the database`);
+                    navigate('/dashboard/all-tests')
                     reset();
                     setLoading(false);
                 }

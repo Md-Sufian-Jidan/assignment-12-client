@@ -16,9 +16,9 @@ const Navbar = () => {
             });
     };
     const navLinks = <>
-        <li><NavLink to="/"><i>Home</i></NavLink></li>
-        <li><NavLink to="all-tests"><i>All Tests</i></NavLink></li>
-        <li><NavLink to="/dashboard" ><i>Dashboard</i></NavLink></li>
+        <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to="/"><i>Home</i></NavLink>
+        <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to="all-tests"><i>All Tests</i></NavLink>
+        <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to="/dashboard" ><i>Dashboard</i></NavLink>
     </>
     return (
         <div className="navbar fixed max-w-7xl mx-auto bg-indigo-100 z-50">

@@ -13,6 +13,7 @@ import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 import Profile from "../Components/Dashboard/Profile/Profile";
 import AllTests from "../Pages/Home/AllTests/AllTests";
 import SingleTest from "../Pages/Home/AllTests/SingleTest";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -50,29 +51,29 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'add-test',
-                element: <AddTest />
+                element: <PrivateRoute><AddTest /></PrivateRoute>
             },
             {
                 path: 'all-tests',
-                element: <AllTestRoute />
+                element: <PrivateRoute><AllTestRoute /></PrivateRoute>
             },
             {
                 path: '/dashboard/update-test/:id',
-                element: <UpdateTest />,
+                element: <PrivateRoute><UpdateTest /></PrivateRoute>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-test/${params.id}`)
             },
             {
                 path: 'statistic',
-                element: <Statistic />
+                element: <PrivateRoute><Statistic /></PrivateRoute>
             },
             {
                 path: 'all-users',
-                element: <AllUsers />
+                element: <PrivateRoute><AllUsers /></PrivateRoute>
             },
             // every body access
             {
                 path: '/dashboard/profile',
-                element: <Profile />
+                element: <PrivateRoute><Profile /></PrivateRoute>
             },
         ]
     }

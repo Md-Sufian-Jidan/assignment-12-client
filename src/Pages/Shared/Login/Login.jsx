@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import useAuth from "../../../Hooks/useAuth";
+import { VscLoading } from "react-icons/vsc";
 // import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
@@ -14,6 +15,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     // login a user
     const {
         register,
@@ -23,6 +25,7 @@ const Login = () => {
 
 
     const onSubmit = (data) => {
+        setLoading(true);
         const email = data.email;
         const password = data.password;
         const confirmPassword = data.confirmPassword;
@@ -39,12 +42,13 @@ const Login = () => {
         loginUser(email, password)
             .then(res => {
                 console.log(res);
+                setLoading(false);
                 navigate('/');
                 return toast.success('User Login Successfully');
             })
             .catch(err => {
                 console.log(err);
-                navigate('/')
+                setLoading(false);
                 return toast.error(err.message);
             });
     };
@@ -84,7 +88,10 @@ const Login = () => {
                             </span>
                         </div>
                         <div className=" mt-6">
-                            <input className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md focus:outline-none focus:bg-sky-600" type="submit" value="Sign In" />
+                            {loading ? <button className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-lime-700/60 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600 flex justify-center items-center">
+                                <VscLoading className=" animate-spin" size={20} />
+                            </button>
+                                : <input className="w-full px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md focus:outline-none focus:bg-sky-600" type="submit" value="Sign In" />}
                         </div>
                     </form>
 

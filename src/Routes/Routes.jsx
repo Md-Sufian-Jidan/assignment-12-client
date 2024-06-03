@@ -13,14 +13,13 @@ import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 import Profile from "../Components/Dashboard/Profile/Profile";
 import AllTests from "../Pages/Home/AllTests/AllTests";
 import SingleTest from "../Pages/Home/AllTests/SingleTest";
-import PrivateRoute from "./PrivateRoute";
 import UserStatistics from "../Pages/Dashboard/User/UserStatistics";
 import MyAppointments from "../Pages/Dashboard/User/MyAppointments";
 import MyTestResult from "../Pages/Dashboard/User/MyTestResult";
 import AddBanner from "../Pages/Dashboard/Admin/AddBanner";
 import AllBanner from "../Pages/Dashboard/Admin/AllBanner";
 import Reservations from "../Pages/Dashboard/Admin/Reservations";
-
+import PrivateRoute from './PrivateRoute'
 
 export const router = createBrowserRouter([
     {
@@ -52,7 +51,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children: [
             {
                 path: 'add-test',

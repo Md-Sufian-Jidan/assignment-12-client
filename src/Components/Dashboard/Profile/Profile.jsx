@@ -1,17 +1,22 @@
 import { Helmet } from 'react-helmet';
 import useAuth from '../../../Hooks/useAuth';
 import useRole from '../../../Hooks/useRole';
+import UpdateUserProfile from '../Form/UpdateUserProfile';
+import { useState } from 'react';
+import Skeleton from '../../../../Skeleton';
 
 const Profile = () => {
     const { user } = useAuth();
-
-    const [role] = useRole();
+    const [role, isLoading] = useRole();
     console.log(role);
+    const [isOpen, setIsOpen] = useState(false);
 
-
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     console.log(user)
-    // if (isLoading) return <LoadingSpinner />
+    if (isLoading) return <Skeleton />
     return (
         <>
             <Helmet>
@@ -54,12 +59,13 @@ const Profile = () => {
                                 </p>
 
                                 <div>
-                                    <button className='bg-indigo-500 px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
+                                    <button onClick={() => setIsOpen} className='bg-indigo-500 px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
                                         Update Profile
                                     </button>
-                                    <button className='bg-indigo-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]'>
+                                    <UpdateUserProfile closeModal={closeModal} isOpen={isOpen} bookingInfo={user} />
+                                    {/* <button className='bg-indigo-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]'>
                                         Change Password
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>

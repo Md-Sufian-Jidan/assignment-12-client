@@ -30,12 +30,15 @@ const Login = () => {
         const password = data.password;
         const confirmPassword = data.confirmPassword;
         if (password.length < 6) {
+            setLoading(false);
             return toast.error('Your password should at least 6 character long');
         }
         if (!/[A-Z]/.test(password)) {
+            setLoading(false);
             return toast.error('Your password should contain a Capital letter')
         }
         if (!/[a-z]/.test(password)) {
+            setLoading(false);
             return toast.error('Your password should contain a lower letter')
         }
         if (password !== confirmPassword) return toast.error('Password and confirm password will be same');

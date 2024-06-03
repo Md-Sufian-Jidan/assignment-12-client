@@ -21,8 +21,7 @@ const Sidebar = () => {
     }
     const [isActive, setActive] = useState(false)
     const [isAdmin] = useAdmin();
-    console.log(isAdmin);
-
+    // console.log(isAdmin);
 
     // Sidebar Responsive Handler
     const handleToggle = () => {

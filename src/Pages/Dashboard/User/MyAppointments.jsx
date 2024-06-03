@@ -38,7 +38,7 @@ const MyAppointments = () => {
                             <th>#</th>
                             <th>Test Image</th>
                             <th>Test Name</th>
-                            <th>Test Category</th>
+                            <th>Appointment Date</th>
                             <th>Status</th>
                             <th>Delete</th>
                         </tr>
@@ -58,7 +58,7 @@ const MyAppointments = () => {
                                     </div>
                                 </td>
                                 <td>{test?.name}</td>
-                                <td>{test?.testCategory}</td>
+                                <td>{new Date(test?.date).toDateString()}</td>
                                 <td><span className="badge badge-outline bg-indigo-400/40 ">{test?.status}</span></td>
                                 <th>
                                     <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>

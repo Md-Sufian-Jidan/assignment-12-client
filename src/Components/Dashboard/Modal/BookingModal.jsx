@@ -69,7 +69,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch, disable, setDi
                                     as='h3'
                                     className='text-lg font-medium text-center leading-6 text-gray-900'
                                 >
-                                    Review Info Before Reserve
+                                    Review Info Before Booked
                                 </DialogTitle>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>

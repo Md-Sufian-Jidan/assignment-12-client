@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const UserDetailsModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
-    console.log(bookingInfo);
+    // console.log(bookingInfo);
     const [isLoading, setIsLoading] = useState(false);
 
     const download = () => {
@@ -99,7 +99,7 @@ const UserDetailsModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                                         onClick={() => download()}
                                     >
                                         {
-                                            isLoading ? 'Downloading...' : `Download`
+                                            isLoading ? <span>Downloading...</span> : <span>Download</span>
                                         }
                                     </button>
                                     <button

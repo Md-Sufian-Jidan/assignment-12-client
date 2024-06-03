@@ -1,11 +1,13 @@
 import { Helmet } from 'react-helmet';
 import useAuth from '../../../Hooks/useAuth';
-import useAdmin from '../../../Hooks/useAdmin';
+import useRole from '../../../Hooks/useRole';
 
 const Profile = () => {
     const { user } = useAuth();
-    const [isAdmin, isLoading] = useAdmin();
-    // console.log(role);
+
+    const [role] = useRole();
+    console.log(role);
+
 
 
     console.log(user)
@@ -33,10 +35,11 @@ const Profile = () => {
                         <p className='mt-2 text-xl font-medium text-gray-800 '>
                             User Id: {user?.uid}
                         </p>
-                        <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full '>
+                        <p className='p-2 px-4 text-xs text-white bg-indigo-500 rounded-full '>
                             {/* {role?.role.split('')[0].toUpperCase() + role?.role.substring(1,4)} */}
-                            {role?.role.split('')[0].toUpperCase() + role?.role.substring(1, 5)}
+                            {role?.split('')[0].toUpperCase() + role?.substring(1, 5)}
                         </p>
+
                         <div className='w-full p-2 mt-4 rounded-lg'>
                             <div className='flex flex-wrap items-center justify-between text-sm text-gray-600 '>
                                 <p className='flex flex-col'>

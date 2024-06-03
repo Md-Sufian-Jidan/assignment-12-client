@@ -14,7 +14,7 @@ const AllTests = () => {
     const { data: tests, isLoading } = useQuery({
         queryKey: ['all-test'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/all-tests');
+            const { data } = await axiosSecure.get(`/all-tests?search=${search}`);
             return data;
         }
     });
@@ -56,7 +56,7 @@ const AllTests = () => {
                             placeholder="Search" />
                         <span
                             onClick={getData}
-                            className="btn bg-sky-400/60">Search</span>
+                            className="btn bg-gradient-to-bl from-green-400 to-sky-400">Search</span>
                     </label>
                 </form>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">

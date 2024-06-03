@@ -97,16 +97,19 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
                 email: user?.email,
                 name: user?.displayName,
                 photo: user?.photoURL
-            }
+            };
+            const status = 'pending'
             const paymentInfo = {
                 ...bookingInfo,
                 guest,
+                status,
                 bookId: bookingInfo._id,
                 transactionId: paymentIntent?.id,
                 date: new Date(),
             };
             // remember this it will help you in the future
             delete paymentInfo?._id;
+            delete paymentInfo?.slot;
 
             try {
                 // 2. save payment info in booking in db

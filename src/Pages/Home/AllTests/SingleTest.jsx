@@ -4,14 +4,15 @@ import { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Skeleton from "../../../../Skeleton";
 import { useQuery } from "@tanstack/react-query";
-
+import useStatus from '../../../Hooks/useStatus'
 const SingleTest = () => {
-    // const test = useLoaderData();
+    const [status] = useStatus();
+    console.log(status);
     const { id } = useParams();
     console.log(id);
-    const axiosSecure= useAxiosSecure();
+    const axiosSecure = useAxiosSecure();
     const [disable, setDisable] = useState(false);
-    
+
     const { data: test = {}, isLoading, refetch } = useQuery({ // : alise
         queryKey: ["room", id],
         queryFn: async () => {
@@ -26,7 +27,7 @@ const SingleTest = () => {
         setIsOpen(false);
         setDisable(false);
     };
-    if(isLoading) return <Skeleton />
+    if (isLoading) return <Skeleton />
     return (
         <div className="flex overflow-hidden rounded-lg shadow-lg my-5 ">
             <div className="w-1/3 bg-cover">
@@ -51,7 +52,7 @@ const SingleTest = () => {
                     </div>
                     <h2 className="font-bold" >Author : <span className="font-semibold">{test?.admin?.name}</span></h2>
                     <h1 className="font-bold">Remember Booking : {test?.slot} More</h1>
-                    <button disabled={test?.slot < 1} onClick={() => setIsOpen(true)} className="btn w-44 bg-gradient-to-t from-violet-400 to-violet-600">Booked</button>
+                    <button disabled={test?.slot < 1 || status === 'blocked'} onClick={() => setIsOpen(true)} className="btn w-44 bg-gradient-to-t from-violet-400 to-violet-600">Booked</button>
                 </div>
                 <BookingModal closeModal={closeModal} isOpen={isOpen} bookingInfo={test} refetch={refetch} disable={disable} setDisable={setDisable} />
             </div>

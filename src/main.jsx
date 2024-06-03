@@ -7,6 +7,8 @@ import {
 import { router } from './Routes/Routes.jsx';
 import AuthProvider from './Contexts/AuthProvider.jsx';
 import { Toaster } from 'react-hot-toast';
+import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/theme/default.css'; 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();

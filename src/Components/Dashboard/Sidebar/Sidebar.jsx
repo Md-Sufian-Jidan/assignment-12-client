@@ -10,9 +10,10 @@ import toast from 'react-hot-toast'
 import { MdLogout } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
 import useAdmin from '../../../Hooks/useAdmin'
+// import useRole from '../../../Hooks/useRole'
 
 const Sidebar = () => {
-    const { logout } = useAuth()
+    const { user, logout } = useAuth();
     const handleLogOut = () => {
         logout()
             .then(() => { return toast.success('User logout successfully') })
@@ -78,7 +79,9 @@ const Sidebar = () => {
                     {/* Nav Items */}
                     <div className='flex flex-col justify-between flex-1 mt-6'>
                         {/*  Menu Items */}
-                        {isAdmin ? <AdminRoute /> : <UserRoute />}
+                        {isAdmin ? <AdminRoute /> :
+                            user?.status === 'blocked' ? toast.error('You Are Blocked By Admin')
+                                : <UserRoute />}
 
                     </div>
                 </div>

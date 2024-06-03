@@ -1,6 +1,26 @@
-# React + Vite
+# HealthScope
+# Live Site Link : 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Some Feature of HealthScope
+
+1) WelCome to Our Website
+
+# All The Packages Used In Client Side
+
+- axios
+- firebase
+- html2canvas
+- react-jspdf
+- react-router-dom
+- react-hot-toast
+- react-hook-form
+- react-icons
+- react-helmet
+- react-date-range
+- Swiper
+- sweetalert2
+- @stripe/react-stripe-js
+- @tanstack/react-query
 
 Currently, two official plugins are available:
 

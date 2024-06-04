@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 // firebase auth
 import auth from "../Firebase/Firebase.config";
@@ -22,6 +22,11 @@ const AuthProvider = ({ children }) => {
             photoURL: photo,
         });
     };
+    // send reset password email
+    const resetPassword = email => {
+        setLoading(true);
+        return sendPasswordResetEmail(auth, email);
+    }
     // login user by email and password
     const loginUser = (email, password) => {
         setLoading(true);
@@ -71,7 +76,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [axiosPublic]);
 
-    const authInfo = { user, loading,setLoading, createUser, updateUserProfile, loginUser, googleLoginUser, githubLoginUser, logout };
+    const authInfo = { user, loading, setLoading, createUser, updateUserProfile, loginUser, googleLoginUser, githubLoginUser, logout, resetPassword };
     return (
         <AuthContext.Provider value={authInfo}>
             {children}

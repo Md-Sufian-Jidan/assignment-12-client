@@ -1,7 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../Components/Dashboard/Sidebar/Sidebar";
+import useAuth from "../Hooks/useAuth";
+import Skeleton from "../../Skeleton";
 
 const Dashboard = () => {
+    const { loading } = useAuth();
+    if (loading) return <Skeleton />
     return (
         <div className="relative min-h-screen md:flex">
             <Sidebar />

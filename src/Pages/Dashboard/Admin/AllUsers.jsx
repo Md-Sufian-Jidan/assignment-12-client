@@ -6,17 +6,13 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import Skeleton from "../../../../Skeleton";
 import { Helmet } from "react-helmet";
-import { useState } from "react";
 import UserDetailsModal from "../../../Components/Dashboard/Modal/UserDetailsModal";
+import { useRef, useState } from "react";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 
 const AllUsers = () => {
-    // handle update role
-    const [updateRole, setUpdateRole] = useState('');
-    // handle status
-    const [select, setSelect] = useState('');
-    // user details modal
-    const [isOpen, setIsOpen] = useState(false);
-
     const axiosSecure = useAxiosSecure();
     const { data: users, refetch, isLoading } = useQuery({
         queryKey: ['users'],
@@ -25,75 +21,74 @@ const AllUsers = () => {
             return data;
         }
     });
+    const pdfRef = useRef();
+    // user details modal
+    const [isOpen, setIsOpen] = useState(false);
     // close modal func
     const closeModal = () => {
         setIsOpen(false);
-        refetch();
     };
     // update user role
-    const handleRole = async (id) => {
-        console.log(updateRole);
-        const res = await axiosSecure.patch(`/user/role/${id}`, { role: updateRole });
+    const handleRole = async (id, role) => {
+        // console.log(role);
+        const res = await axiosSecure.patch(`/user/role/${id}`, { role: role });
+        console.log(res.data);
         if (res.data.modifiedCount > 0) {
             Swal.fire({
                 position: "top-start",
                 icon: "success",
-                title: "User Updated",
+                title: `User Updated to ${role}`,
                 showConfirmButton: false,
                 timer: 1500
             });
-            refetch()
+            refetch();
         }
     };
-
-    // change a user status
-    const handleStatus = async (id) => {
+    const handleStatus = async (id, status) => {
         console.log(id);
-        const res = await axiosSecure.patch(`/user/status/${id}`, { status: select });
+        console.log(status);
+        const res = await axiosSecure.patch(`/user/status/${id}`, { status: status });
         if (res.data.modifiedCount > 0) {
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Your work has been saved",
+                title: `User has been ${status}`,
                 showConfirmButton: false,
                 timer: 1500
             });
         }
+    };
+    // change a user status
 
-    }
+    const download = async (user) => {
+        console.log('download');
+        const input = pdfRef.current;
+        // console.log(input);
+        // setIsLoading(true);
+        html2canvas(input).then((canvas) => {
+            const imageData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4", true);
+            const width = pdf.internal.pageSize.getWidth();
+            const hight = pdf.internal.pageSize.getHeight();
+            const imageWidth = canvas.width;
+            const imageHight = canvas.hight;
+            const ratio = Math.min(width / imageWidth, hight / imageHight);
+            const imgX = (width - imageWidth * ratio) / 2;
+            const imgY = 30;
+            pdf.addImage(imageData, 'PNG', imgX, imgY, width * ratio, hight * ratio);
+            // setIsLoading(false);
+            pdf.save('report.pdf');
+        });
+        console.log(user);
+        const res = await axiosSecure.post('/user/download', user);
+        console.log(res.data);
+        console.log('html');
+        // setUserTestBooked(bookedTest);
+        // setSingleUser(res.data);
+        // console.log(res.data);
+        // console.log(bookedTest.data);
+    };
 
-    // handle delete
-    // const handleDelete = (id) => {
-    //     console.log(id);
-    //     Swal.fire({
-    //         title: "Are you sure?",
-    //         text: "You won't be able to revert this!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, delete it!"
-    //     }).then((result) => {
-    //         console.log(result);
-    //         if (result.isConfirmed) {
-    //             axiosSecure.delete(`/user-delete/${id}`)
-    //                 .then(res => {
-    //                     console.log(res.data);
-    //                     if (res.data.deletedCount > 0) {
-    //                         Swal.fire({
-    //                             title: "Deleted!",
-    //                             text: "User has been deleted.",
-    //                             icon: "success"
-    //                         });
-    //                         refetch();
-    //                     }
-    //                 })
-    //                 .catch(err => {
-    //                     console.log(err);
-    //                 })
-    //         }
-    //     });
-    // };
     if (isLoading) return <Skeleton />
     return (
         <>
@@ -104,20 +99,20 @@ const AllUsers = () => {
                 <table className="table">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-slate-200/80">
                             <th>#</th>
                             <th>User Image</th>
                             <th>User Name</th>
                             <th>Role</th>
                             <th>Status</th>
                             <th>Details</th>
-                            {/* <th>Delete</th> */}
+                            <th>Download</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* row 1 */}
                         {
-                            users?.map((test, idx) => <tr key={test?._id}>
+                            users?.map((test, idx) => <tr className={`${idx % 2 !== 0 ? "bg-slate-200/50 rounded-xl" : ""}`} key={test?._id}>
                                 <th>{idx + 1}</th>
                                 <td>
                                     <div className="flex items-center gap-3">
@@ -132,40 +127,32 @@ const AllUsers = () => {
                                 {/* handle role */}
                                 <td>
                                     <div>
-                                        <select onChange={(e) => {
-                                            setUpdateRole(e.target.value)
-                                            handleRole(test?._id);
-                                        }}
-                                            value={test?.role}
-                                            className="w-20 border rounded-xl p-1" name="" id="">
-                                            <option className="bg-lime-400/40" value="admin">admin</option>
-                                            <option className="bg-lime-400/40" value="guest">guest</option>
+                                        <select className="p-1 rounded-lg bg-gradient-to-tr from-sky-300/40 to-sky-400" onChange={(e) => {
+                                            handleRole(test?._id, e.target.value)
+                                        }} name="" id="">
+                                            <option value="admin">admin</option>
+                                            <option value="guest">guest</option>
                                         </select>
                                     </div>
                                 </td>
 
                                 {/* handel status */}
                                 <td>
-                                    <div>
-                                        <select defaultValue={test?.status} onChange={(e) => {
-                                            setSelect(e.target.value)
-                                            handleStatus(test?._id);
-                                        }}
-                                            className="w-20 border rounded-xl p-1" name="" id="">
-                                            <option className="bg-red-600/40" value="blocked">active</option>
-                                            <option className="bg-green-600/40" value="active">blocked</option>
-                                        </select>
-                                    </div>
-                                    {/* <UpdateUserStatus closeModal={closeModal} isOpen={status} setSelect={setSelect} handleStatus={handleStatus} user={test} /> */}
+                                    <select defaultValue={test?.status} className="rounded-lg bg-gradient-to-tr from-pink-300/40 to-pink-400/40 p-1" onChange={(e) => {
+                                        handleStatus(test?._id, e.target.value)
+                                    }} name="" id="">
+                                        <option value="active">active</option>
+                                        <option value="blocked">blocked</option>
+                                    </select>
                                 </td>
                                 {/* handle user details */}
                                 <td>
-                                    <button onClick={() => setIsOpen(true)} className="badge badge-accent">View Details</button>
+                                    <button onClick={() => setIsOpen(true)} className="btn-sm btn-info ">View Details</button>
                                     <UserDetailsModal closeModal={closeModal} bookingInfo={test}
                                         isOpen={isOpen} refetch={refetch} />
                                 </td>
-                                <th>
-                                    {/* <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button> */}
+                                <th ref={pdfRef}>
+                                    <button onClick={() => download(test)} className="btn">Download</button>
                                 </th>
                             </tr>)
                         }

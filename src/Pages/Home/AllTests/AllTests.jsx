@@ -1,34 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Skeleton from "../../../../Skeleton";
 
 const AllTests = () => {
     const axiosSecure = useAxiosSecure();
     const [search, setSearch] = useState('');
-    const [test, setTests] = useState();
-    console.log(test);
+    // const [tests, setTests] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { data: tests, isLoading } = useQuery({
-        queryKey: ['all-test'],
+    const { data: tests } = useQuery({
+        queryKey: ['tests'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/all-tests?search=${search}`);
+            const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests`);
             return data;
-        }
+        },
     });
+    useEffect(() => {
+        getAllTests();
+    }, []);
 
-    console.log(tests);
-    const getData = async () => {
+    const getAllTests = async () => {
         const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
-        setTests(data);
+        return data;
     };
-    // const handleReset = async () => {
-    //     setSearch('');
-    //     const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/queries`, { withCredentials: true });
-    //     setQueries(data);
-    // }
+    console.log(tests);
+
     if (isLoading) return <Skeleton />;
     return (
         <>
@@ -42,7 +41,6 @@ const AllTests = () => {
                         <div className="max-w-5xl">
                             <h1 className="mb-5 text-5xl font-bold">Comprehensive Diagnostic Tests</h1>
                             <p className="mb-5">Explore our extensive range of diagnostic tests designed to provide accurate and reliable results for your health needs. Whether you are checking your blood count, liver function, thyroid health, or cardiovascular risk, our tests cover a wide spectrum of medical conditions. Each test is performed using advanced technology to ensure the highest standards of care. Browse through our test catalog to find the right diagnostic services for you and schedule your appointments with ease. Your health and well-being are our top priorities.</p>
-                            {/* <button className="btn btn-primary">Get Started</button> */}
                         </div>
                     </div>
                 </div>
@@ -55,7 +53,7 @@ const AllTests = () => {
                             className="grow"
                             placeholder="Search" />
                         <span
-                            onClick={getData}
+                            onClick={getAllTests}
                             className="btn bg-gradient-to-bl from-green-400 to-sky-400">Search</span>
                     </label>
                 </form>

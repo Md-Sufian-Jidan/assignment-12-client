@@ -6,23 +6,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import useAuth from "../../../Hooks/useAuth";
 import { VscLoading } from "react-icons/vsc";
-// import { FaGithub, FaGoogle } from "react-icons/fa";
-
+import useStatus from '../../../Hooks/useStatus'
 const Login = () => {
-    // googleLoginUser, githubLoginUser 
     const { loginUser } = useAuth();
+    const [status] = useStatus();
+    console.log(status);
     // custom state
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     // login a user
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
+    const { register, handleSubmit, formState: { errors }, } = useForm();
 
     const onSubmit = (data) => {
         setLoading(true);
@@ -46,7 +41,11 @@ const Login = () => {
             .then(res => {
                 console.log(res);
                 setLoading(false);
-                navigate('/');
+                if (status === 'blocked') {
+                    navigate('/');
+                } else {
+                    navigate('/dashboard/statistic');
+                }
                 return toast.success('User Login Successfully');
             })
             .catch(err => {

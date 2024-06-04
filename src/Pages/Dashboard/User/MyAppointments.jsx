@@ -4,6 +4,7 @@ import useAuth from "../../../Hooks/useAuth";
 import { Helmet } from "react-helmet";
 import { FaTrashCanArrowUp } from "react-icons/fa6";
 import Skeleton from "../../../../Skeleton";
+import toast from "react-hot-toast";
 
 const MyAppointments = () => {
     const { user } = useAuth();
@@ -21,6 +22,7 @@ const MyAppointments = () => {
     // handle delete
     const handleDelete = (id) => {
         console.log(id);
+        toast.success('ami asi vai tension koi ren na')
     };
 
     if (isLoading) return <Skeleton />;
@@ -40,7 +42,7 @@ const MyAppointments = () => {
                             <th>Test Name</th>
                             <th>Appointment Date</th>
                             <th>Status</th>
-                            <th>Delete</th>
+                            <th>Cancel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +63,7 @@ const MyAppointments = () => {
                                 <td>{new Date(test?.date).toDateString()}</td>
                                 <td><span className="badge badge-outline bg-indigo-400/40 ">{test?.status}</span></td>
                                 <th>
-                                    <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
+                                    <button onClick={() => handleDelete(test?._id)} className="badge badge-outline bg-red-400/60">Cancel</button>
                                 </th>
                             </tr>)
                         }

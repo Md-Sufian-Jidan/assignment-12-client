@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle, } from '@headlessui/react'
 import { Fragment } from 'react'
+import { PiSpinnerBold } from 'react-icons/pi';
 
-const UserDetailsModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
+const DownloadUser = ({ closeModal, isOpen, bookingInfo }) => {
+    console.log(bookingInfo);
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -34,47 +36,36 @@ const UserDetailsModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                                     as='h3'
                                     className='text-lg font-medium text-center leading-6 text-gray-900'
                                 >
-                                    User Details
+                                    Review Info Before Booked
                                 </DialogTitle>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        User Name : {bookingInfo.name}
+                                        Test Name :
                                     </p>
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        User Email : {bookingInfo.email}
+                                        Test Category :
                                     </p>
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                         Blood Group : {bookingInfo.bloodGroup}
-                                    </p>
-                                </div>
-                                <div className='mt-2'>
-                                    <p className='text-sm text-gray-500'>
-                                        District : {bookingInfo.districts}
-                                    </p>
-                                </div>
-                                <div className='mt-2'>
-                                    <p className='text-sm text-gray-500'>
-                                        Upozila : {bookingInfo.upozilas}
+                                        Price: $
                                     </p>
                                 </div>
                                 <hr className='mt-8 ' />
-                                {/* user download  */}
                                 <div className='flex mt-2 justify-around'>
-                                    {/* <button
+                                    <button
                                         type="submit"
                                         className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
+                                    // onClick={closeModal}
                                     >
-                                        {
-                                            isLoading ? <span>Downloading...</span> : <span>Download</span>
-                                        }
-                                    </button> */}
+                                        <PiSpinnerBold className="animate-spin m-auto" size={24} /> :
+                                        (`Download`)
+                                    </button>
                                     <button
                                         onClick={() => {
-                                            refetch();
+                                            // handleDelete(id);
                                             closeModal();
                                         }}
                                         type='button'
@@ -93,13 +84,13 @@ const UserDetailsModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
     )
 }
 
-UserDetailsModal.propTypes = {
+DownloadUser.propTypes = {
     bookingInfo: PropTypes.object,
     closeModal: PropTypes.func,
     isOpen: PropTypes.bool,
     refetch: PropTypes.func,
-    isLoading: PropTypes.bool,
-    download: PropTypes.func,
+    disable: PropTypes.bool,
+    // closeModal: PropTypes.func,
 }
 
-export default UserDetailsModal
+export default DownloadUser

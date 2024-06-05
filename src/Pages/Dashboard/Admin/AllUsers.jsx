@@ -120,7 +120,7 @@ const AllUsers = () => {
         console.log(res.data);
         const doc = new jsPDF();
         doc.text(`
-                                    HealthScope Diagnostic Center
+                                   HealthScope Diagnostic Center
 
     User Name : ${res?.data?.singleUser?.name}         User Email : ${res?.data?.singleUser?.email}
 
@@ -142,6 +142,9 @@ const AllUsers = () => {
     4) Test Price : $${res?.data?.userBookings[0].price}
 
     5) Test Status : ${res?.data?.userBookings[0].status}
+
+    For more comprehensive details and insights, please refer to the full
+    PDF report.
         
     Thank you for choosing HealthScope for your diagnostic needs. We 
     trust that the results provided will guide you towards better health
@@ -211,12 +214,12 @@ const AllUsers = () => {
                                 </td>
                                 {/* handle user details */}
                                 <td>
-                                    <button onClick={() => setIsOpen(true)} className="btn-sm btn-info ">View Details</button>
+                                    <button onClick={() => setIsOpen(true)} className="md:p-1.5 p-2 bg-pink-500/70 md:rounded-full rounded-3xl text-white">View Details</button>
                                     <UserDetailsModal closeModal={closeModal} bookingInfo={test}
                                         isOpen={isOpen} refetch={refetch} />
                                 </td>
                                 <th>
-                                    <button onClick={() => download(test)} className="btn">Download</button>
+                                    <button onClick={() => download(test)} className="p-1.5 bg-fuchsia-800/20 rounded-full hover:text-red-500/50 hover:scale-105">Download</button>
                                 </th>
                             </tr>)
                         }

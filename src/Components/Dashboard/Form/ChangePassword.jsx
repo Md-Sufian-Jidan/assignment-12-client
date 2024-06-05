@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types'
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle, } from '@headlessui/react'
-import { Fragment, useState, } from 'react'
+import { Fragment, } from 'react'
 import { PiSpinnerGapBold } from 'react-icons/pi';
-import { useForm } from 'react-hook-form';
-import useAuth from '../../../Hooks/useAuth';
+// import { useForm } from 'react-hook-form';
+// import useAuth from '../../../Hooks/useAuth';
 
 
-const ChangePassword = ({ closeModal, isOpen, }) => {
-    const { resetPassword, user } = useAuth();
-    const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = async (data) => {
-        setLoading(true);
-        resetPassword(user?.email)
-        console.log(data);
-    }
+const ChangePassword = ({ closeModal, isOpen, handlePassword, loading }) => {
+    // const { resetPassword, user } = useAuth();
+    // const [loading, setLoading] = useState(false);
+    // const { register, handleSubmit, formState: { errors } } = useForm();
+    // const onSubmit = async (data) => {
+    //     setLoading(true);
+    //     resetPassword(user?.email)
+    //     console.log(data);
+    // }
 
     // console.log(bookingInfo);
     return (
@@ -52,14 +52,18 @@ const ChangePassword = ({ closeModal, isOpen, }) => {
                                 </DialogTitle>
                                 <div className='flex gap-1 mt-5'>
                                     <label className="text-xl font-medium" htmlFor="username">Send Password Reset Email</label>
-                                    <input className='w-8' type="checkbox" name="" id=""
-                                        {...register("check", { required: true })} />
-                                    {errors.check && <span className="text-red-500">Check The box</span>}
+                                    <input className='w-8' type="checkbox" name="" id="" required />
+                                    {/* {...register("check", { required: true })}  */}
+                                    {/* {errors.check && <span className="text-red-500">Check The box</span>} */}
                                 </div>
-                                <form onSubmit={handleSubmit(onSubmit)}>
+                                {/* onSubmit={handleSubmit(onSubmit)} */}
+                                <form>
                                     <div className='mt-5'>
                                         {loading ? <button className='btn w-full'><PiSpinnerGapBold className='animate-spin' size={20} /></button> :
-                                            <button type="submit" className='btn w-full bg-green-900/40'>Reset Password</button>}
+                                            <button onClick={() => {
+                                                handlePassword()
+                                                closeModal()
+                                            }} className='btn w-full bg-green-900/40'>Reset Password</button>}
                                     </div>
                                 </form>
                             </DialogPanel>
@@ -75,9 +79,9 @@ ChangePassword.propTypes = {
     bookingInfo: PropTypes.object,
     closeModal: PropTypes.func,
     isOpen: PropTypes.bool,
-    refetch: PropTypes.func,
-    disable: PropTypes.bool,
-    setDisable: PropTypes.func,
+    handlePassword: PropTypes.func,
+    setLoading: PropTypes.func,
+    loading: PropTypes.bool,
 }
 
 export default ChangePassword

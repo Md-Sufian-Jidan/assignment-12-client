@@ -20,6 +20,7 @@ import AddBanner from "../Pages/Dashboard/Admin/AddBanner";
 import AllBanner from "../Pages/Dashboard/Admin/AllBanner";
 import Reservations from "../Pages/Dashboard/Admin/Reservations";
 import PrivateRoute from './PrivateRoute'
+import AdminProtect from "./AdminProtect";
 
 export const router = createBrowserRouter([
     {
@@ -55,41 +56,41 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'add-test',
-                element: <PrivateRoute><AddTest /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><AddTest /></AdminProtect></PrivateRoute>
             },
             {
                 path: 'all-tests',
-                element: <PrivateRoute><AllTestRoute /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><AllTestRoute /></AdminProtect></PrivateRoute>
             },
             {
                 path: '/dashboard/update-test/:id',
-                element: <PrivateRoute><UpdateTest /></PrivateRoute>,
+                element: <PrivateRoute><AdminProtect><UpdateTest /></AdminProtect></PrivateRoute>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-test/${params.id}`)
             },
             {
                 path: '/dashboard/statistic',
-                element: <PrivateRoute><Statistic /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><Statistic /></AdminProtect></PrivateRoute>
             },
             {
                 path: 'all-users',
-                element: <PrivateRoute><AllUsers /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><AllUsers /></AdminProtect></PrivateRoute>
             },
             {
                 path: 'add-banner',
-                element: <PrivateRoute><AddBanner /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><AddBanner /></AdminProtect></PrivateRoute>
             },
             {
                 path: 'all-banner',
-                element: <PrivateRoute><AllBanner /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><AllBanner /></AdminProtect></PrivateRoute>
             },
             {
                 path: 'reservations',
-                element: <PrivateRoute><Reservations /></PrivateRoute>
+                element: <PrivateRoute><AdminProtect><Reservations /></AdminProtect></PrivateRoute>
             },
             // normal user route
             {
                 path: 'user-statistics',
-                element: <UserStatistics />
+                element: <PrivateRoute><UserStatistics /></PrivateRoute>
             },
             {
                 path: '/dashboard/my-appointments',
@@ -97,7 +98,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/my-test-result',
-                element: <MyTestResult />
+                element: <PrivateRoute><MyTestResult /></PrivateRoute>
             },
             // every body access
             {

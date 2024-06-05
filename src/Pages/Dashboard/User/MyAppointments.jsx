@@ -2,15 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 import { Helmet } from "react-helmet";
-import { FaTrashCanArrowUp } from "react-icons/fa6";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import Skeleton from "../../../../Skeleton";
-import toast from "react-hot-toast";
 
 const MyAppointments = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: appointments, isLoading } = useQuery({
+    const { data: appointments, isLoading, refetch } = useQuery({
         queryKey: ['appointments'],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/appointments/${user?.email}`)
@@ -22,7 +22,27 @@ const MyAppointments = () => {
     // handle delete
     const handleDelete = (id) => {
         console.log(id);
-        toast.success('ami asi vai tension koi ren na')
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to cancel the appointment!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Cancel it!"
+          }).then(async(result) => {
+            if (result.isConfirmed) {
+              const res =await axiosSecure.delete(`/delete/appointment/${id}`);
+              if(res.data.deletedCount > 0) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your Appointment has been Canceled.",
+                    icon: "success"
+                  });
+                  refetch();
+              }
+            }
+          });
     };
 
     if (isLoading) return <Skeleton />;

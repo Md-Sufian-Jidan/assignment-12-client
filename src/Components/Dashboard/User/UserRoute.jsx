@@ -4,7 +4,6 @@ import { MdOutlineUpcoming } from 'react-icons/md'
 import { FaRegNoteSticky } from 'react-icons/fa6';
 
 const UserRoute = () => {
-
     return (
         <>
             <nav>

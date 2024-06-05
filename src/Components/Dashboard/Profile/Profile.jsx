@@ -5,20 +5,28 @@ import UpdateUserProfile from '../Form/UpdateUserProfile';
 import { useState } from 'react';
 import Skeleton from '../../../../Skeleton';
 import ChangePassword from '../Form/ChangePassword';
+import toast from 'react-hot-toast';
 
 const Profile = () => {
-    const { user } = useAuth();
+    const { user, resetPassword} = useAuth();
     const [role, isLoading] = useRole();
     // console.log(role);
     const [isOpen, setIsOpen] = useState(false);
     const [passwordIsOpen, setPasswordIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const closeModal = () => {
         setIsOpen(false);
         setPasswordIsOpen(false);
     };
+    console.log(user);
 
-    console.log(user)
+    const handlePassword = () => {
+        setLoading(true);
+        resetPassword(user?.email)
+        .then(()=> toast.success('Send Password Verification Email.Check Your Email'))
+    }
+
     if (isLoading) return <Skeleton />
     return (
         <>
@@ -69,7 +77,7 @@ const Profile = () => {
                                     <button onClick={() => setPasswordIsOpen(true)} className='bg-indigo-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-gradient-to-tr from-green-500 to-green-800'>
                                         Change Password
                                     </button>
-                                    <ChangePassword closeModal={closeModal} isOpen={passwordIsOpen} />
+                                    <ChangePassword closeModal={closeModal} isOpen={passwordIsOpen} handlePassword={handlePassword} loading={loading} />
                                 </div>
                             </div>
                         </div>

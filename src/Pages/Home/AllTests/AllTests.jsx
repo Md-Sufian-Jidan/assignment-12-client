@@ -51,7 +51,7 @@ const AllTests = () => {
                             value={search}
                             type="text"
                             className="grow"
-                            placeholder="Search" />
+                            placeholder="Enter Date to search" />
                         <span
                             onClick={getAllTests}
                             className="btn bg-gradient-to-bl from-green-400 to-sky-400">Search</span>

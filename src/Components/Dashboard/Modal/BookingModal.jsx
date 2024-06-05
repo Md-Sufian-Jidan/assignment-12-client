@@ -81,11 +81,6 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch, disable, setDi
                                         Test Category : {bookingInfo.testCategory}
                                     </p>
                                 </div>
-                                {/* <div className='mt-2'>
-                                    <p className='text-sm text-gray-500'>
-                                        : {bookingInfo.price}
-                                    </p>
-                                </div> */}
 
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
@@ -94,14 +89,10 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch, disable, setDi
                                 </div>
                                 <div className='mt-2'>
                                     <label className="text-xl font-medium" htmlFor="username">Discount</label>
-                                    {/* <input id="username" type="text" className="block w-full px-4 py-2 mt-2 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-slate-400 focus:outline-none focus:ring" />
-                                        <button className='btn'>Discount</button> */}
                                     <label className="input input-bordered flex items-center gap-2">
                                         <input name='discount' type="text" className="grow" placeholder="Search" onBlur={(e) => setDiscount(e.target.value)} />
                                         <button disabled={disable} onClick={() => handleDiscount()} className="btn bg-gradient-to-br from-pink-400 to-gray-400 text-white">Get Discount</button>
                                     </label>
-                                    {/* {...register("name", { required: true })} */}
-                                    {/* {errors.name && <span className="text-red-500">Test Name is required</span>} */}
                                 </div>
 
                                 <div className='mt-2'>

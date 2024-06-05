@@ -98,11 +98,13 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
                 name: user?.displayName,
                 photo: user?.photoURL
             };
-            const status = 'pending'
+            const status = 'pending';
+            const mostBooked = 1;
             const paymentInfo = {
                 ...bookingInfo,
                 guest,
                 status,
+                mostBooked,
                 bookId: bookingInfo._id,
                 transactionId: paymentIntent?.id,
                 date: new Date(),

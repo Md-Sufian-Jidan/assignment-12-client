@@ -75,7 +75,7 @@ const AddTest = () => {
                         </div>
                         <div>
                             <label className="text-xl font-medium" htmlFor="username">Test Price</label>
-                            <input id="username" type="text" className="block w-full px-4 py-2 mt-2 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-slate-400 focus:outline-none focus:ring"
+                            <input id="username" type="number" className="block w-full px-4 py-2 mt-2 bg-white border border-gray-200 rounded-md dark:bg-indigo-200/30 dark:text-violet-00/70 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-slate-400 focus:outline-none focus:ring"
                                 {...register("price", { required: true })} />
                             {errors.price && <span className="text-red-500">Test Price is required</span>}
                         </div>

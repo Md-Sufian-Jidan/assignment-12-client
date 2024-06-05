@@ -44,7 +44,7 @@ const Login = () => {
                 if (status === 'blocked') {
                     navigate('/');
                 } else {
-                    navigate('/dashboard/statistic');
+                    navigate('/dashboard/user-statistic');
                 }
                 return toast.success('User Login Successfully');
             })

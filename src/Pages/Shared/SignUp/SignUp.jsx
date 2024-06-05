@@ -87,8 +87,8 @@ const SignUp = () => {
             <Helmet>
                 <title>Sign Up Page</title>
             </Helmet>
-            <section className="flex items-center gap-3 min-h-screen p-10 bg-contain bg-repeat-x bg-[url('https://i.ibb.co/09VVhSX/donate-blood.png')]">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex-1 dark:bg-orange-800/50 p-6 max-w-3xl mx-auto rounded-xl">
+            <section className="flex items-center gap-3 min-h-screen p-10 bg-contain bg-repeat-x bg-[url('https://i.ibb.co/KDxw8sN/ravi23-may-15.jpg')]">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex-1 dark:bg-orange-800/60 p-6 max-w-3xl mx-auto rounded-xl">
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
                             <label className="text-gray-700 dark:text-gray-200" htmlFor="username">Username</label>

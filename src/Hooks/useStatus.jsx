@@ -6,13 +6,14 @@ const useRole = () => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: status, isLoading } = useQuery({
-        queryKey: ['status', user?.email],
+    const { data: status = null, isLoading } = useQuery({
+        queryKey: ['status'],
         // enabled: loading ? false : true,
-        enabled: !loading && !!user?.email, // enabled means wait the queryFn.
+        enabled: !loading, // enabled means wait the queryFn.
         queryFn: async () => {
-            const { data } = await axiosSecure(`/role/${user?.email}`);
-            return data.status;
+            const { data } = await axiosSecure.get(`/role/${user?.email}`);
+            console.log(data);
+            return data?.status;
         },
     });
     // fetching user info using logged in email

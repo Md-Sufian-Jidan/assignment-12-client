@@ -15,17 +15,50 @@ const Reservations = () => {
         }
     });
 
+    // handleDeliver 
+    const handleDeliver = (id) => {
+        Swal.fire({
+            title: "User Report?",
+            text: "Send Report to the user!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Send Report!"
+        }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/reservation-status/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Report has been Send.",
+                                icon: "success"
+                            });
+                            refetch();
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        });
+
+    }
+
     // handle delete
     const handleDelete = (id) => {
         console.log(id);
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You want to cancel user Reservation!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes,Cancel it!"
         }).then((result) => {
             console.log(result);
             if (result.isConfirmed) {
@@ -34,8 +67,8 @@ const Reservations = () => {
                         console.log(res.data);
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
-                                title: "Deleted!",
-                                text: "User has been deleted.",
+                                title: "Canceled!",
+                                text: "User Reservation has been Canceled.",
                                 icon: "success"
                             });
                             refetch();
@@ -51,9 +84,9 @@ const Reservations = () => {
 
     return (
         <>
-        <Helmet>
-            <title>Dashboard | Reservations</title>
-        </Helmet>
+            <Helmet>
+                <title>Dashboard | Reservations</title>
+            </Helmet>
             <form className="max-w-xl mx-auto my-7">
                 <label className="input input-bordered flex items-center gap-2 mx-10">
                     <input
@@ -77,6 +110,7 @@ const Reservations = () => {
                             <th>Test Name</th>
                             <th>Booked By</th>
                             <th>Booked Date</th>
+                            <th>Status</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -109,6 +143,8 @@ const Reservations = () => {
                                     </div>
                                 </td>
                                 <td>{new Date(test?.date).toLocaleDateString()}</td>
+                                <td><button onClick={() => handleDeliver(test?._id)} className='bg-fuchsia-200 rounded-full btn btn-xs'>
+                                    {test?.status.split('')[0].toUpperCase() + test?.status.substring(1, 7)}</button></td>
                                 <th>
                                     <button onClick={() => handleDelete(test?._id)} className="text-red-500 text-lg"><FaTrashCanArrowUp /></button>
                                 </th>

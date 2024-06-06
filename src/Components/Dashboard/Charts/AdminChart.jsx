@@ -1,4 +1,5 @@
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Legend, LineChart, Tooltip, Line } from 'recharts';
+import PropTypes from 'prop-types'
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Legend, } from 'recharts';
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
 const data = [
@@ -46,16 +47,8 @@ const TriangleBar = (props) => {
     return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
 };
 // pie chart imports here
-import { PieChart, Pie, ResponsiveContainer } from 'recharts';
-
-const pie = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+import { PieChart, Pie, } from 'recharts';
+const COLORS = ['#BC5A94', '#E88D67', '#006989', '#FF8042'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -72,37 +65,14 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 const AdminChart = ({ chartData }) => {
     // console.log(chartData.mostlyBooked);
     const mostBooked = chartData?.mostlyBooked;
-    console.log(mostBooked);
+    const pieData = chartData?.pieData;
+    // console.log(mostBooked);
     return (
         <div className='my-5'>
-            {/* bar chart here? */}
-            <div className="">
-                <BarChart
-                    width={800}
-                    height={300}
-                    data={mostBooked}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="testCategory" />
-                    <YAxis />
-                    <Bar dataKey="mostBooked" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
-                        {mostBooked?.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={colors[index % 20]} />
-                        ))}
-                    </Bar>
-                </BarChart>
-            </div>
-            {/* pie chart here? */}
-            <div className="">
-                <PieChart width={400} height={400}>
+            <div className="md:flex">
+                <PieChart width={400} height={300}>
                     <Pie
-                        data={pie}
+                        data={pieData}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
@@ -111,15 +81,47 @@ const AdminChart = ({ chartData }) => {
                         fill="#8884d8"
                         dataKey="value"
                     >
-                        {data?.map((entry, index) => (
+                        {pieData?.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
                     <Legend></Legend>
                 </PieChart>
+                <div className='mt-20 space-y-3 font-semibold'>
+                    <p>1) Keep pushing forward! Every step brings us closer to success</p>
+                    <p>2) Progress is power. Let is turn those pending tasks into delivered successes!</p>
+                    <p>3) Stay focused and persistent. Together, we can achieve anything!</p>
+                    <p>4) Each completed task is a victory. Let is keep the momentum going!</p>
+                </div>
             </div>
+            {/* bar chart here? */}
+            <BarChart
+                width={1000}
+                height={300}
+                data={mostBooked}
+                margin={{
+                    top: 20,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="testCategory" />
+                <YAxis />
+                <Bar dataKey="mostBooked" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
+                    {mostBooked?.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+                    ))}
+                </Bar>
+            </BarChart>
+            {/* pie chart here? */}
+
         </div>
     );
 };
 
+AdminChart.propTypes = {
+    chartData: PropTypes.object,
+}
 export default AdminChart;

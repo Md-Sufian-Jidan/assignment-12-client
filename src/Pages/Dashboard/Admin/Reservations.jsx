@@ -5,16 +5,17 @@ import { useQuery } from '@tanstack/react-query';
 import Skeleton from '../../../../Skeleton';
 import { FaTrashCanArrowUp } from 'react-icons/fa6';
 import { Helmet } from 'react-helmet';
+import { useState } from 'react';
 const Reservations = () => {
+    const [search, setSearch] = useState('')
     const axiosSecure = useAxiosSecure();
     const { data: bookings, refetch, isLoading } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/booked/test')
+            const { data } = await axiosSecure.get(`/booked/test?search${search}`)
             return data;
         }
     });
-
     // handleDeliver 
     const handleDeliver = (id) => {
         Swal.fire({
@@ -26,11 +27,11 @@ const Reservations = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Send Report!"
         }).then((result) => {
-            console.log(result);
+            // console.log(result);
             if (result.isConfirmed) {
                 axiosSecure.patch(`/reservation-status/${id}`)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.modifiedCount > 0) {
                             Swal.fire({
                                 title: "Success!",
@@ -47,10 +48,9 @@ const Reservations = () => {
         });
 
     }
-
     // handle delete
     const handleDelete = (id) => {
-        console.log(id);
+        // console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You want to cancel user Reservation!",
@@ -60,11 +60,11 @@ const Reservations = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes,Cancel it!"
         }).then((result) => {
-            console.log(result);
+            // console.log(result);
             if (result.isConfirmed) {
                 axiosSecure.delete(`/reservation-delete/${id}`)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Canceled!",
@@ -90,13 +90,13 @@ const Reservations = () => {
             <form className="max-w-xl mx-auto my-7">
                 <label className="input input-bordered flex items-center gap-2 mx-10">
                     <input
-                        // onChange={(e) => setSearch(e.target.value)}
-                        // value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        value={search}
                         type="text"
                         className="grow"
-                        placeholder="Search" />
+                        placeholder="Search By Email" />
                     <span
-                        // onClick={getData}
+                        onClick={() => refetch()}
                         className="btn bg-violet-400/60">Search</span>
                 </label>
             </form>

@@ -25,17 +25,17 @@ const AddBanner = () => {
         const isActive = false;
         // console.log(name, testCategory, price, image, description);
         const img_url = await imageUpload(image);
-        console.log(img_url);
+        // console.log(img_url);
         const admin = {
             email: user?.email,
             photo: user?.photoURL,
             name: user?.displayName
         }
         const testData = { name, title, couponCode, couponRate, img_url, description, isActive, admin }
-        console.log(testData);
+        // console.log(testData);
         await axiosSecure.post('/add-banner', testData)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.insertedId) {
                     toast.success(`Banner is added to the database`);
                     reset();

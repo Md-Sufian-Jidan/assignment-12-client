@@ -66,12 +66,12 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
         });
         // step-05
         if (error) {
-            console.log('[error]', error);
+            // console.log('[error]', error);
             setCardError(error.message);
             setProcessing(false)
             return;
         } else {
-            console.log('[PaymentMethod]', paymentMethod);
+            // console.log('[PaymentMethod]', paymentMethod);
             setCardError('');
         }
         // step-06 confirm payment
@@ -85,13 +85,13 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
             },
         });
         if (confirmError) {
-            console.log(confirmError);
+            // console.log(confirmError);
             setProcessing(false);
             setCardError(confirmError.message);
             return;
         }
         if (paymentIntent.status === 'succeeded') {
-            console.log(paymentIntent);
+            // console.log(paymentIntent);
             // 1. create payment info object
             const guest = {
                 email: user?.email,
@@ -116,11 +116,11 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
             try {
                 // 2. save payment info in booking in db
                 const { data } = await axiosSecure.post('/booking', paymentInfo);
-                console.log(data);
+                // console.log(data);
 
                 // 3. change room status to booked in db
                 await axiosSecure.patch(`/book/slot/${bookingInfo?._id}`)
-                console.log('booking updated');
+                // console.log('booking updated');
 
                 //update ui
                 refetch();
@@ -128,13 +128,12 @@ const CheckOutForm = ({ closeModal, bookingInfo, refetch, afterDiscount, setAfte
                 toast.success(`Test Booked Successfully`);
                 setAfterDiscount(0)
                 // navigate('/dashboard/reservation');
-
-                console.log(data);
+                // console.log(data);
             } catch (err) {
-                console.log('save a room booked details', err);
+                // console.log('save a test booked details', err);
             }
 
-            console.log(paymentInfo);
+            // console.log(paymentInfo);
             setProcessing(false);
         }
     };

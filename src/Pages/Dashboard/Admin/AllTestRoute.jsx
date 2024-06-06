@@ -20,7 +20,7 @@ const AllTestRoute = () => {
 
     // handle delete
     const handleDelete = (id) => {
-        console.log(id);
+        // console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -30,12 +30,12 @@ const AllTestRoute = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-            console.log(result);
+            // console.log(result);
             if (result.isConfirmed) {
-                console.log('confirm');
+                // console.log('confirm');
                 axiosSecure.delete(`/test-delete/${id}`)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
@@ -46,7 +46,7 @@ const AllTestRoute = () => {
                         }
                     })
                     .catch(err => {
-                        console.log(err);
+                        // console.log(err);
                     })
             }
         });

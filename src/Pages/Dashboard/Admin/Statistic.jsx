@@ -5,13 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { FaUsers } from "react-icons/fa";
 import { SlBookOpen } from "react-icons/sl";
 import AdminChart from "../../../Components/Dashboard/Charts/AdminChart";
-import UseStatus from '../../../Hooks/useStatus'
+// import UseStatus from '../../../Hooks/useStatus'
 
 const Statistic = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const [status] = UseStatus();
-    console.log(status);
+    // const [status] = UseStatus();
+    // console.log(status);
 
     const { data: stat } = useQuery({
         queryKey: ['admin-stat'],
@@ -28,7 +28,6 @@ const Statistic = () => {
             return data;
         },
     });
-    console.log(chartData);
     return (
         <>
             <Helmet>
@@ -67,7 +66,7 @@ const Statistic = () => {
                         </div>
                         <div className="stat-title">Total Sales</div>
                         <div className="stat-value">${stat?.totalSales}</div>
-                        <div className="stat-desc text-secondary">31 tasks remaining</div>
+                        {/* <div className="stat-desc text-secondary">31 tasks remaining</div> */}
                     </div>
 
                 </div>

@@ -12,10 +12,8 @@ const Cover = () => {
             return data;
         }
     });
-    const isActive = banners?.map(banner => banner?.isActive);
-    console.log(isActive);
-    const banner = banners?.map(banner => banner);
-    console.log(banner);
+    // const isActive = banners?.map(banner => banner?.isActive);
+    // const banner = banners?.map(banner => banner);
 
     return (
         <div>

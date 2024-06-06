@@ -7,9 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import useStatus from '../../../Hooks/useStatus'
 const SingleTest = () => {
     const [status] = useStatus();
-    console.log(status);
     const { id } = useParams();
-    console.log(id);
     const axiosSecure = useAxiosSecure();
     const [disable, setDisable] = useState(false);
 
@@ -20,7 +18,6 @@ const SingleTest = () => {
             return data;
         }
     });
-    console.log(test);
     const [isOpen, setIsOpen] = useState(false);
 
     const closeModal = () => {

@@ -17,11 +17,10 @@ const MyAppointments = () => {
             return data;
         }
     });
-    console.log(appointments);
 
     // handle delete
     const handleDelete = (id) => {
-        console.log(id);
+        // console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You want to cancel the appointment!",

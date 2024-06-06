@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 import { PiSpinnerBold } from 'react-icons/pi';
 
 const DownloadUser = ({ closeModal, isOpen, bookingInfo }) => {
-    console.log(bookingInfo);
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as='div' className='relative z-10' onClose={closeModal}>

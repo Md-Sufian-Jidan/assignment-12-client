@@ -15,7 +15,7 @@ const AllBanner = () => {
 
     // handle banner
     const handleBanner = async (id) => {
-        console.log(id);
+        // console.log(id);
         const res = await axiosSecure.patch(`/update/banner/${id}`)
         if(res.data.modifiedCount > 0) {
             toast.success('Banner Successfully Added To The Home Page');

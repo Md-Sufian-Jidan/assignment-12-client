@@ -1,38 +1,6 @@
+import PropTypes from 'prop-types'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
-const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
-
-const data = [
-    {
-        name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-];
+const colors = ['#FDDE55', '#32012F', '#0A6847', '#AF47D2', 'red', 'pink'];
 
 const getPath = (x, y, width, height) => {
     return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
@@ -48,14 +16,7 @@ const TriangleBar = (props) => {
 // pie chart imports here
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 
-const pie = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#40A578', '#FF5580', '#FFBB28', '#FF8042'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -69,13 +30,15 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-const UserChart = () => {
+const UserChart = ({ chartData }) => {
+    const data = chartData?.mostlyBooked;
+    const pie = chartData?.pieData;
     return (
         <div className='flex my-5'>
             {/* bar chart here? */}
-            <div className="w-1/2">
+            <div className="lg:w-1/2">
                 <BarChart
-                    width={500}
+                    width={600}
                     height={300}
                     data={data}
                     margin={{
@@ -86,17 +49,17 @@ const UserChart = () => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="testCategory" />
                     <YAxis />
-                    <Bar dataKey="uv" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
-                        {data.map((entry, index) => (
+                    <Bar dataKey="price" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
+                        {data?.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={colors[index % 20]} />
                         ))}
                     </Bar>
                 </BarChart>
             </div>
             {/* pie chart here? */}
-            <div className="w-1/2">
+            <div className="lg:w-1/2">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart width={400} height={400}>
                         <Pie
@@ -109,7 +72,7 @@ const UserChart = () => {
                             fill="#8884d8"
                             dataKey="value"
                         >
-                            {data.map((entry, index) => (
+                            {pie?.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
@@ -121,4 +84,7 @@ const UserChart = () => {
     );
 };
 
+UserChart.propTypes = {
+    chartData: PropTypes.object
+}
 export default UserChart;

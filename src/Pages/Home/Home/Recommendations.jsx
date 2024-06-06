@@ -19,7 +19,6 @@ const Recommendations = () => {
         queryKey: ['recommendations'],
         queryFn: async () => {
             const res = await axiosSecure.get('/recommendations');
-            console.log(res.data);
             return res.data;
         }
     })

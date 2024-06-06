@@ -14,26 +14,26 @@ const UpdateUserProfile = ({ closeModal, isOpen, bookingInfo }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = async (data) => {
         setLoading(true);
-        console.log(data);
+        // console.log(data);
         const name = data.name;
         const email = data.email;
         const image = data.photo[0];
         const img_url = await imageUpload(image);
         updateUserProfile(name, img_url)
-            .then((res) => {
-                console.log(res);
+            .then(() => {
+                // console.log(res);
                 setLoading(false);
                 // navigate('/'); // fix this before deploying your project
                 toast.success('User Profile Updated Successfully');
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
                 toast.error(err.message);
                 setLoading(false);
             });
     };
-    console.log(bookingInfo);
+    // console.log(bookingInfo);
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as='div' className='relative z-10 ' onClose={closeModal}>

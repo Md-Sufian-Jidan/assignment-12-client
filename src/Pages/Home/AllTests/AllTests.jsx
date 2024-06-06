@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Skeleton from "../../../../Skeleton";
 
@@ -10,23 +10,23 @@ const AllTests = () => {
     const [search, setSearch] = useState('');
     // const [tests, setTests] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    // useEffect(() => {
+    //     getAllTests();
+    // }, []);
 
-    const { data: tests } = useQuery({
+    const { data: tests, } = useQuery({
         queryKey: ['tests'],
         queryFn: async () => {
-            const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests`);
+            const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
             return data;
         },
     });
-    useEffect(() => {
-        getAllTests();
-    }, []);
-
-    const getAllTests = async () => {
-        const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
-        return data;
-    };
-    console.log(tests);
+    // const getAllTests = async () => {
+    //     const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
+    //     setTests(data);
+    //     return data;
+    // };
+    // console.log(tests);
 
     if (isLoading) return <Skeleton />;
     return (
@@ -49,12 +49,13 @@ const AllTests = () => {
                         <input
                             onChange={(e) => setSearch(e.target.value)}
                             value={search}
-                            type="text"
+                            type="date"
                             className="grow"
                             placeholder="Enter Date to search" />
-                        <span
+                        {/* <button
                             onClick={getAllTests}
-                            className="btn bg-gradient-to-bl from-green-400 to-sky-400">Search</span>
+                            className="btn bg-gradient-to-bl from-green-400 to-sky-400">Search
+                            </button> */}
                     </label>
                 </form>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">
@@ -66,6 +67,7 @@ const AllTests = () => {
                             <div className="card-body">
                                 <h2 className="font-semibold">Test Name: <span className="">{test?.name}</span> </h2>
                                 <p className="font-semibold">Test Category : {test?.testCategory}</p>
+                                <p className="font-semibold">Start From : {new Date(test?.from).toDateString()}</p>
                                 <div className="flex justify-end my-2">
                                     <Link to={`/test/details/${test?._id}`}>
                                         <button className="btn btn-outline btn-accent text-white">View Details</button>

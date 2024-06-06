@@ -19,9 +19,10 @@ const Profile = () => {
         setIsOpen(false);
         setPasswordIsOpen(false);
     };
-    console.log(user);
+    // console.log(user);
 
-    const handlePassword = () => {
+    const handlePassword = (e) => {
+        e.preventDefault();
         setLoading(true);
         resetPassword(user?.email)
         .then(()=> toast.success('Send Password Verification Email.Check Your Email'))

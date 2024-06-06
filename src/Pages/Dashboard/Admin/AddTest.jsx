@@ -20,7 +20,7 @@ const AddTest = () => {
     });
     //date range handler
     const handleDates = item => {
-        console.log(item);
+        // console.log(item);
         setDates(item.selection);
     };
 
@@ -37,7 +37,7 @@ const AddTest = () => {
         const to = dates.endDate; // this is end date
         // console.log(name, testCategory, price, image, description);
         const img_url = await imageUpload(image);
-        console.log(img_url);
+        // console.log(img_url);
         const admin = {
             email: user?.email,
             photo: user?.photoURL,
@@ -45,10 +45,10 @@ const AddTest = () => {
         };
         const slot = 5;
         const testData = { name, testCategory, price, img_url, description, admin, slot, from, to }
-        console.log(testData);
+        // console.log(testData);
         await axiosSecure.post('/add-test', testData)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.insertedId) {
                     toast.success(`${name} is added to the database`);
                     reset();
@@ -112,12 +112,13 @@ const AddTest = () => {
                     </div>
                     {/* test date */}
                     {/* Calender */}
-                    <div className='space-y-1 w-full'>
+                    <div className='space-y-1'>
                         <label htmlFor='location' className='block text-gray-600'>
                             Select Availability Range
                         </label>
                         {/* Calender */}
                         <DateRange
+                            className="w-full"
                             rangeColors={['#1f1ac1']}
                             editableDateInputs={true}
                             onChange={item => handleDates(item)}

@@ -10,7 +10,6 @@ import useStatus from '../../../Hooks/useStatus'
 const Login = () => {
     const { loginUser } = useAuth();
     const [status] = useStatus();
-    console.log(status);
     // custom state
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -38,8 +37,7 @@ const Login = () => {
         }
         if (password !== confirmPassword) return toast.error('Password and confirm password will be same');
         loginUser(email, password)
-            .then(res => {
-                console.log(res);
+            .then(() => {
                 setLoading(false);
                 if (status === 'blocked') {
                     navigate('/');
@@ -49,7 +47,6 @@ const Login = () => {
                 return toast.success('User Login Successfully');
             })
             .catch(err => {
-                console.log(err);
                 setLoading(false);
                 return toast.error(err.message);
             });

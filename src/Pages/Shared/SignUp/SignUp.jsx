@@ -33,7 +33,7 @@ const SignUp = () => {
         const upozilas = data.upozilas;
         const confirmPassword = data.confirmPassword;
         // const confirmPassword = data.confirmPassword;
-        console.log(name, password, email, image, confirmPassword);
+        // console.log(name, password, email, image, confirmPassword);
         if (password.length < 6) {
             return toast.error('Your password should at least 6 character long');
         }
@@ -43,12 +43,15 @@ const SignUp = () => {
         if (!/[a-z]/.test(password)) {
             return toast.error('Your password should contain a lower letter')
         }
-        if (password !== confirmPassword) return toast.error('Password and confirm password will be same');
+        if (password !== confirmPassword) {
+            setLoading(false);
+            return toast.error('Password and confirm password will be same')
+        }
         const img_url = await imageUpload(image);
-        console.log(img_url);
+        // console.log(img_url);
         createUser(email, password)
-            .then((res) => {
-                console.log(res.user);
+            .then(() => {
+                // console.log(res.user);
                 // TODO : save a user data in db
                 const userInfo = {
                     name: name,
@@ -60,6 +63,7 @@ const SignUp = () => {
                     image: img_url,
                     status: 'active',
                     role: 'guest',
+                    date: new Date(),
                 };
 
                 axiosPublic.post('/save/user', userInfo)

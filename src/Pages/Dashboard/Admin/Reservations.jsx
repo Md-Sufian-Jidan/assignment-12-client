@@ -5,17 +5,29 @@ import { useQuery } from '@tanstack/react-query';
 import Skeleton from '../../../../Skeleton';
 import { FaTrashCanArrowUp } from 'react-icons/fa6';
 import { Helmet } from 'react-helmet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const Reservations = () => {
-    const [search, setSearch] = useState('')
     const axiosSecure = useAxiosSecure();
-    const { data: bookings, refetch, isLoading } = useQuery({
-        queryKey: ['bookings'],
-        queryFn: async () => {
-            const { data } = await axiosSecure.get(`/booked/test?search${search}`)
-            return data;
-        }
-    });
+    const [search, setSearch] = useState('');
+    const [bookings, setBookings] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // const { data: bookings, refetch, isLoading } = useQuery({
+    //     queryKey: ['bookings'],
+    //     queryFn: async () => {
+    //         const { data } = await axiosSecure.get(`/booked/test?search${search}`)
+    //         return data;
+    //     }
+    // });
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/booked/test?search=${search}`)
+            .then(res => res.json())
+            .then(data => {
+                setIsLoading(true);
+                setBookings(data);
+            });
+    }, [search]);
     // handleDeliver 
     const handleDeliver = (id) => {
         Swal.fire({
@@ -96,7 +108,6 @@ const Reservations = () => {
                         className="grow"
                         placeholder="Search By Email" />
                     <span
-                        onClick={() => refetch()}
                         className="btn bg-violet-400/60">Search</span>
                 </label>
             </form>

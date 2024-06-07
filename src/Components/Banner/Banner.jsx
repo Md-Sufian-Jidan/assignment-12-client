@@ -39,7 +39,7 @@ export default function Banner() {
                             <div className="max-w-md">
                                 <h1 className="mb-5 text-3xl font-bold">Comprehensive Health Checkups</h1>
                                 <p className="mb-5">Get thorough health assessments with our range of comprehensive tests designed to detect early signs of health issues.</p>
-                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:dark:bg-sky-500/50 dark:text-white">All Tests</Link>
+                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:dark:bg-sky-500 dark:text-white">All Tests</Link>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ export default function Banner() {
                             <div className="max-w-md">
                                 <h1 className="mb-5 text-3xl font-bold">Fast and Accurate Results</h1>
                                 <p className="mb-5">Receive reliable and prompt test results. We ensure precision and speed to help you make informed health decisions.</p>
-                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:bg-indigo-500 dark:text-white">All Tests</Link>
+                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:bg-sky-500/50 dark:text-white">All Tests</Link>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ export default function Banner() {
                             <div className="max-w-md">
                                 <h1 className="mb-5 text-3xl font-bold">Special Discount for New Patients</h1>
                                 <p className="mb-5">Join us today and enjoy a special 20% discount on all tests. Use code NEW20 at checkout and take the first step towards better health.</p>
-                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:bg-indigo-500 dark:text-white">All Tests</Link>
+                                <Link to="/all-tests" className="btn bg-[#5f3951] dark:bg-sky-500 dark:text-white">All Tests</Link>
                             </div>
                         </div>
                     </div>

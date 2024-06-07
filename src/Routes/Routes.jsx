@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
             },
             // normal user route
             {
-                path: 'user-statistics',
+                path: '/dashboard/user-statistics',
                 element: <PrivateRoute><UserStatistics /></PrivateRoute>
             },
             {

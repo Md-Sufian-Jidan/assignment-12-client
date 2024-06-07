@@ -1,32 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// import { useQuery } from "@tanstack/react-query";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Skeleton from "../../../../Skeleton";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
 const AllTests = () => {
-    const axiosSecure = useAxiosSecure();
+    // const axiosSecure = useAxiosSecure();
     const [search, setSearch] = useState('');
-    // const [tests, setTests] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    // useEffect(() => {
-    //     getAllTests();
-    // }, []);
 
-    const { data: tests, } = useQuery({
-        queryKey: ['tests'],
-        queryFn: async () => {
-            const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
-            return data;
-        },
-    });
-    // const getAllTests = async () => {
-    //     const { data } = await axiosSecure(`${import.meta.env.VITE_API_URL}/all-tests?search=${search}`);
-    //     setTests(data);
-    //     return data;
-    // };
-    // console.log(tests);
+    const [tests, setTests] = useState();
+    const [count, setCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0)
+    const [itemsPerPage, setItemsPerPage] = useState(6);
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/all-tests?page=${currentPage}&size=${itemsPerPage}`)
+            .then(res => res.json())
+            .then(data => {
+                setTests(data?.result)
+                setCount(data?.count)
+            })
+    }, [currentPage, itemsPerPage]);
+
+    const numberOfPages = Math.ceil(count / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()];
+    console.log(pages);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1)
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < pages?.length - 1) {
+            setCurrentPage(currentPage + 1)
+        }
+    };
 
     if (isLoading) return <Skeleton />;
     return (
@@ -60,7 +73,7 @@ const AllTests = () => {
                 </form>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">
                     {
-                        tests?.map(test => <div key={test?._id} className="card w-96 bg-orange-100/50 shadow-xl mx-auto">
+                        tests?.map(test => <div key={test?._id} className="card w-96 bg-gradient-to-bl from-cyan-300 to-fuchsia-500 shadow-xl mx-auto">
                             <figure className="px-10 pt-10">
                                 <img src={test?.img_url} alt="Shoes" className="rounded-xl" />
                             </figure>
@@ -76,6 +89,16 @@ const AllTests = () => {
                             </div>
                         </div>)
                     }
+                </div>
+                <div className="text-center mx-auto my-3">
+                    <button onClick={handlePreviousPage} className="btn hover:bg-gradient-to-br  from-gray-400 to-fuchsia-200"><FaArrowCircleLeft /></button>
+                    {
+                        pages?.map(page => <button
+                            onClick={() => setCurrentPage(page)}
+                            className={currentPage === page ? 'btn bg-gradient-to-tl from-fuchsia-300 to-emerald-200 mx-1' : 'btn mx-1 hover:bg-gradient-to-tl from-fuchsia-300 to-emerald-200'}
+                            key={page}>{page + 1}</button>)
+                    }
+                    <button onClick={handleNextPage} className="btn hover:bg-gradient-to-br  from-violet-300 to-indigo-300"><FaArrowCircleRight /></button>
                 </div>
             </div>
         </>

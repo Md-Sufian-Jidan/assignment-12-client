@@ -3,6 +3,7 @@ import Banner from "../../../Components/Banner/Banner";
 import Cover from "./Cover";
 import Faq from "./Faq";
 import Recommendations from "./Recommendations";
+import Contact from "./Contact";
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
                 <Cover />
                 <Recommendations />
                 <Faq />
+                <Contact />
             </div>
         </>
     );

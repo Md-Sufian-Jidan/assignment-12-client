@@ -20,6 +20,7 @@ const Statistic = () => {
             return data;
         },
     });
+    console.log(stat);
 
     const { data: chartData } = useQuery({
         queryKey: ['chart-data'],

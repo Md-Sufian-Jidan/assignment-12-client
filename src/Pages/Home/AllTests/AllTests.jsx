@@ -48,7 +48,7 @@ const AllTests = () => {
                 <title>HealthScope | All Test Page</title>
             </Helmet>
             <div>
-                <div className="hero h-[500px] bg-cover my-3 rounded-xl" style={{ backgroundImage: 'url(https://i.ibb.co/mCb0x0b/medicine-student-doing-their-practice-hospital.jpg)' }}>
+                <div className="hero h-[500px] bg-cover my-3 rounded-xl" style={{ backgroundImage: 'url(https://i.ibb.co/5hwkVKh/check.png)' }}>
                     <div className="hero-overlay bg-opacity-60"></div>
                     <div className="hero-content text-center text-neutral-content">
                         <div className="max-w-5xl">
@@ -73,7 +73,7 @@ const AllTests = () => {
                 </form>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">
                     {
-                        tests?.map(test => <div key={test?._id} className="card w-96 bg-gradient-to-bl from-cyan-300 to-fuchsia-500 shadow-xl mx-auto">
+                        tests?.map(test => <div key={test?._id} className="card w-96 bg-base-100 shadow-xl mx-auto">
                             <figure className="px-10 pt-10">
                                 <img src={test?.img_url} alt="Shoes" className="rounded-xl" />
                             </figure>
@@ -91,14 +91,14 @@ const AllTests = () => {
                     }
                 </div>
                 <div className="text-center mx-auto my-3">
-                    <button onClick={handlePreviousPage} className="btn hover:bg-gradient-to-br  from-gray-400 to-fuchsia-200"><FaArrowCircleLeft /></button>
+                    <button onClick={handlePreviousPage} className="btn hover:bg-gradient-to-br  from-gray-400 to-fuchsia-200 mx-1"><FaArrowCircleLeft /></button>
                     {
                         pages?.map(page => <button
                             onClick={() => setCurrentPage(page)}
                             className={currentPage === page ? 'btn bg-gradient-to-tl from-fuchsia-300 to-emerald-200 mx-1' : 'btn mx-1 hover:bg-gradient-to-tl from-fuchsia-300 to-emerald-200'}
                             key={page}>{page + 1}</button>)
                     }
-                    <button onClick={handleNextPage} className="btn hover:bg-gradient-to-br  from-violet-300 to-indigo-300"><FaArrowCircleRight /></button>
+                    <button onClick={handleNextPage} className="btn hover:bg-gradient-to-br  from-violet-300 to-indigo-300 mx-1"><FaArrowCircleRight /></button>
                 </div>
             </div>
         </>

@@ -71,7 +71,7 @@ const UserStatistics = () => {
                                 Guest Since...
                             </p>
                             <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                                {/* {new Date(guest?.singleUser?.date).toLocaleTimeString()} */}
+                                {new Date(guest?.singleUser?.date).toLocaleTimeString()}
                                 {/* {formatDistanceToNow(guest?.singleUser?.date)} */}
                                 {/* {
                                     formatDistanceToNow(

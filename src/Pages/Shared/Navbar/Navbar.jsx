@@ -21,6 +21,7 @@ const Navbar = () => {
         <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to="/"><i>Home</i></NavLink>
         <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to="all-tests"><i>All Tests</i></NavLink>
         <NavLink className={({ isActive }) => isActive ? "p-3 border-0 border-b-2 border-b-pink-500 mr-2 font-bold" : "p-3 mr-2"} to={`${isAdmin ? "/dashboard/statistic" : "dashboard/user-statistics"}`} ><i>{isAdmin ? 'Admin Dashboard' : 'Dashboard'}</i></NavLink>
+        {user && <button onClick={handleLogOut} className="btn  bg-red-400/60">Logout</button>}
     </>
     return (
         <div className="navbar fixed max-w-7xl mx-auto bg-indigo-100 z-50">
@@ -42,18 +43,15 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
+                {
+                    !user &&
+                    <Link className="btn bg-green-800/50" to="/login">Login</Link>
+                }
                 {user && <div title={user?.email} tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-2">
                     <div className="w-16 rounded-full">
                         <img alt="Profile picture" src={user?.photoURL} />
                     </div>
                 </div>}
-                {
-                    user ? <>
-                        {/* <span>{user?.displayName}</span> */}
-                        <button onClick={handleLogOut} className="btn  bg-red-400/60">Logout</button>
-                    </> :
-                        <Link className="btn bg-green-800/50" to="/login">Login</Link>
-                }
             </div>
         </div>
     );

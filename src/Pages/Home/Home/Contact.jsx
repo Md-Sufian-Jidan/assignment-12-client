@@ -5,8 +5,8 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 const Contact = () => {
     return (
         <>
-            <div className="text-center mt-5">
-            </div>
+            {/* <div className="text-center mt-5">
+            </div> */}
             <section className="bg-white dark:bg-gradient-to-t from-red-300 to-violet-300 my-5 rounded-xl">
                 <div className="container px-6 py-12 mx-auto">
                     <div>

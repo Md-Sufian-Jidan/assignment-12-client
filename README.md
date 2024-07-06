@@ -1,5 +1,5 @@
 # HealthScope
-# Live Site Link : 
+# Live Site Link : <a target="_blank" href="https://healthscope-5b01e.web.app">View</a>
 
 # Some Feature of HealthScope
 
